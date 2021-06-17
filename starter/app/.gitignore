@@ -1,7 +1,7 @@
-/build
-/apikey.properties
 *.iml
 .gradle
+/build
+/apikey.properties
 /local.properties
 /.idea/caches
 /.idea/libraries
@@ -10,7 +10,6 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
-/build
 /captures
 .externalNativeBuild
 .cxx
