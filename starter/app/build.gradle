@@ -76,6 +76,7 @@ dependencies {
 
     // Glide
     //TODO: Add Glide Implementation
+    kapt "com.github.bumptech.glide:compiler:$version_glide"
 
     //Room
     implementation "androidx.room:room-runtime:$version_room"
