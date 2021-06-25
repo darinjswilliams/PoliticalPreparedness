@@ -32,5 +32,10 @@
         android:id="@+id/electionsFragment"
         android:name="com.example.android.politicalpreparedness.election.ElectionsFragment"
         android:label="fragment_elections"/>
+    <fragment
+        android:id="@+id/electionsDetailFragment"
+        android:name="com.example.android.politicalpreparedness.ElectionsDetailFragment"
+        android:label="fragment_elections_detail"
+        tools:layout="@layout/fragment_elections_detail" />
 
 </navigation>
