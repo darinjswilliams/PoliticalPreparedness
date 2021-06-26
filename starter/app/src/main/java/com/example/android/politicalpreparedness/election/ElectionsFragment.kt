@@ -45,12 +45,15 @@ override fun onCreateView(
     //TODO: Link elections to voter info
 
     //TODO: Initiate recycler adapters
-    binding.upcomingElectionRecycler.adapter = ElectionListAdapter(ElectionListAdapter.onClickListener){
+    binding.upcomingElectionRecycler.adapter = ElectionListAdapter(ElectionListAdapter.ElectionListener{
         viewModel.displayElections(it)
     })
 
     //TODO: Populate recycler adapters
-    return null
+
+
+
+    return binding.root
 }
 
 //TODO: Refresh adapters when fragment loads
