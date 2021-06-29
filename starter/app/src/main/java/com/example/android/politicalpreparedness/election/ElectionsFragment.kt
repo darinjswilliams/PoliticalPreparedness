@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
+import com.example.android.politicalpreparedness.election.adapter.ElectionListener
+import com.example.android.politicalpreparedness.launch.LaunchFragmentDirections
 
 class ElectionsFragment : Fragment() {
 
@@ -19,7 +22,7 @@ class ElectionsFragment : Fragment() {
      */
     private val viewModel: ElectionsViewModel by lazy {
         val activity = requireNotNull(this.activity){
-            "You can only access the viewModel after onViewCreated("
+            "You can only access the viewModel after onViewCreated"
         }
         ViewModelProvider(
             this,
@@ -45,11 +48,11 @@ override fun onCreateView(
     //TODO: Link elections to voter info
 
     //TODO: Initiate recycler adapters
-    binding.upcomingElectionRecycler.adapter = ElectionListAdapter(ElectionListAdapter.ElectionListener{
+    //TODO: Populate recycler adapters
+    binding.upcomingElectionRecycler.adapter = ElectionListAdapter(ElectionListener{
         viewModel.displayElections(it)
     })
 
-    //TODO: Populate recycler adapters
 
 
 

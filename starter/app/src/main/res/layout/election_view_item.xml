@@ -7,6 +7,10 @@
         <variable
             name="electionProperty"
             type="com.example.android.politicalpreparedness.network.models.Election" />
+
+        <variable
+            name="clickListner"
+            type="com.example.android.politicalpreparedness.election.adapter.ElectionListener" />
     </data>
 
     <androidx.cardview.widget.CardView

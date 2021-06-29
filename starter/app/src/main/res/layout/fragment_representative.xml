@@ -4,6 +4,11 @@
     xmlns:motion="http://schemas.android.com/tools">
 
     <!-- TODO: Add data binding node -->
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.android.politicalpreparedness.representative.RepresentativeViewModel" />
+    </data>
 
     <!-- TODO: Add motion scene to hide form on vertical scroll. -->
     <androidx.constraintlayout.motion.widget.MotionLayout
@@ -11,6 +16,10 @@
         android:layout_width="match_parent"
         app:layoutDescription="@xml/fragment_representative_scene">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/representativeForm">
         <!-- TODO: Add visual styling and content -->
         <TextView
             android:id="@+id/search_title"
@@ -102,19 +111,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_location" />
 
-        <!-- TODO: Add Representatives RecyclerView -->
+            <!-- TODO: Add visual styling and content -->
+            <TextView
+                android:id="@+id/list_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:visibility="gone"
+                motion:visibilityMode="ignore"
+                app:layout_constraintTop_toBottomOf="@id/representative_title"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-        <!-- TODO: Add visual styling and content -->
-        <TextView
-            android:id="@+id/list_placeholder"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:visibility="gone"
-            motion:visibilityMode="ignore"
-            app:layout_constraintTop_toBottomOf="@id/representative_title"
-            app:layout_constraintBottom_toBottomOf="parent" />
+        <!-- TODO: Add Representatives RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/representative_recycler"
+                android:layout_width="274dp"
+                android:layout_height="267dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/button_location"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.407"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

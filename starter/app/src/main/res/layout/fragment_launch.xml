@@ -27,19 +27,18 @@
             app:srcCompat="@drawable/ballot_logo" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/upcomingButton"
             android:layout_width="305dp"
             android:layout_height="63dp"
-            android:layout_marginTop="204dp"
-            android:text="@string/upcoming_elections"
+            android:layout_marginTop="92dp"
             android:contentDescription="@string/upcoming_elections_button"
+            android:text="@string/upcoming_elections"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.481"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/representativeButton"
             android:layout_width="305dp"
             android:layout_height="62dp"
             android:layout_marginTop="28dp"
@@ -47,6 +46,6 @@
             android:text="@string/find_my_representatives"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintTop_toBottomOf="@+id/upcomingButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

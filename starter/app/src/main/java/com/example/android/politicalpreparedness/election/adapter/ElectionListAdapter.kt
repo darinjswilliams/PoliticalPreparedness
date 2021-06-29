@@ -10,7 +10,7 @@ import com.example.android.politicalpreparedness.databinding.ElectionViewItemBin
 import com.example.android.politicalpreparedness.network.models.Election
 
 class ElectionListAdapter(private val clickListener: ElectionListener) :
-        ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback) {
+    ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback) {
 
     //TODO: Create ElectionDiffCallback
     companion object ElectionDiffCallback : DiffUtil.ItemCallback<Election>() {
@@ -36,31 +36,38 @@ class ElectionListAdapter(private val clickListener: ElectionListener) :
         }
     }
 
+    //Called when the current List is updated
     override fun onCurrentListChanged(
-            previousList: MutableList<Election>,
-            currentList: MutableList<Election>) {
+        previousList: MutableList<Election>,
+        currentList: MutableList<Election>
+    ) {
         super.onCurrentListChanged(previousList, currentList)
     }
-
-//TODO: Add companion object to inflate ViewHolder (from)
-
-    //TODO: Create ElectionListener
-    class ElectionListener(val clickListener: (election: Election) -> Unit) {
-        fun onClick(election: Election) = clickListener(election)
-    }
-
 }
 
+//TODO: Create ElectionListener
+class ElectionListener(val clickListener: (election: Election) -> Unit) {
+    fun onClick(election: Election) = clickListener(election)
+}
 
 //TODO: Create ElectionViewHolder
 class ElectionViewHolder(private var binding: ElectionViewItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-    fun bind(election: Election) {
+    RecyclerView.ViewHolder(binding.root) {
+    fun bind(clickListener: ElectionListener, election: Election) {
         binding.electionProperty = election
-
+        binding.clickListner = clickListener
         //evaluate pending values and update views
         binding.executePendingBindings()
     }
+
+    //TODO: Add companion object to inflate ViewHolder (from)
+    //Create Layout View based on the parent View
+    companion object{
+        fun from(parent: ViewGroup): ElectionViewHolder {
+            return ElectionViewHolder(ElectionViewItemBinding.inflate(LayoutInflater.from(parent.context)))
+        }
+    }
+
 }
 
 
