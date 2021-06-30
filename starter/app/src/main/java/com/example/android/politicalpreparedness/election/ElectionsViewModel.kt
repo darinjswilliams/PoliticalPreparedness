@@ -1,6 +1,7 @@
 package com.example.android.politicalpreparedness.election
 
 import android.app.Application
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.*
 import com.example.android.politicalpreparedness.database.ElectionDatabase.Companion.getInstance
 import com.example.android.politicalpreparedness.network.models.Division
@@ -9,6 +10,7 @@ import com.example.android.politicalpreparedness.repository.CivicsRepository
 import com.example.android.politicalpreparedness.utils.ParseDate
 import com.example.android.politicalpreparedness.utils.ParseDate.getCurrentDateTime
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 //TODO: Construct ViewModel and provide election datasource
 class ElectionsViewModel(application: Application) : AndroidViewModel(application) {
@@ -39,15 +41,16 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
     //Repository and Database
     private val database = getInstance(application)
     private val electionRepository = CivicsRepository(database)
-    val electionList = buildElectionList().toMutableList()
+    val electionList  = buildElectionList().toMutableList()
 
     //init is called immediately when this ViewModel is created
     init {
         viewModelScope.launch {
 
             //call api to elections
+            Timber.i("Before Calling api")
             electionRepository.refreshElections()
-
+            Timber.i("After Calling api")
             //get saved data from local storage
         }
     }

@@ -2,7 +2,6 @@ package com.example.android.politicalpreparedness.network
 
 import com.example.android.politicalpreparedness.network.models.ElectionResponse
 import com.example.android.politicalpreparedness.utils.Constants
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -17,7 +16,7 @@ private val moshi = Moshi.Builder()
 
 private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+//        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .client(CivicsHttpClient.getClient())
         .baseUrl(Constants.BASE_URL)
         .build()

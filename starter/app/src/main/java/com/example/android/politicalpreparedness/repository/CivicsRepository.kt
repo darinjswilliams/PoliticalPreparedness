@@ -19,4 +19,6 @@ class CivicsRepository(private val database: ElectionDatabase) {
 
         }
     }
+
+
 }
