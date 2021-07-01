@@ -1,5 +1,7 @@
 package com.example.android.politicalpreparedness.network
 
+import com.example.android.politicalpreparedness.network.jsonadapter.CustomDateAdapter
+import com.example.android.politicalpreparedness.network.jsonadapter.ElectionAdapter
 import com.example.android.politicalpreparedness.network.models.ElectionResponse
 import com.example.android.politicalpreparedness.utils.Constants
 import com.squareup.moshi.Moshi
@@ -11,15 +13,17 @@ import retrofit2.http.GET
 
 // TODO: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
 private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+    .add(KotlinJsonAdapterFactory())
+    .add(ElectionAdapter())
+    .add(CustomDateAdapter())
+    .build()
 
 private val retrofit = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
 //        .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .client(CivicsHttpClient.getClient())
-        .baseUrl(Constants.BASE_URL)
-        .build()
+    .client(CivicsHttpClient.getClient())
+    .baseUrl(Constants.BASE_URL)
+    .build()
 
 /**
  *  Documentation for the Google Civics API Service can be found at https://developers.google.com/civic-information/docs/v2
@@ -28,7 +32,7 @@ private val retrofit = Retrofit.Builder()
 interface CivicsApiService {
     //TODO: Add elections API Call
     @GET(Constants.ELECTIONS_FEED)
-    suspend fun getElections() : ElectionResponse
+    suspend fun getElections(): ElectionResponse
 
 
     //TODO: Add voterinfo API Call

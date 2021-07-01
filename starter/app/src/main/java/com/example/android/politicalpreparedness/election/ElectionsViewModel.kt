@@ -1,13 +1,11 @@
 package com.example.android.politicalpreparedness.election
 
 import android.app.Application
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.*
 import com.example.android.politicalpreparedness.database.ElectionDatabase.Companion.getInstance
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.repository.CivicsRepository
-import com.example.android.politicalpreparedness.utils.ParseDate
 import com.example.android.politicalpreparedness.utils.ParseDate.getCurrentDateTime
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -49,7 +47,11 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
 
             //call api to elections
             Timber.i("Before Calling api")
-            electionRepository.refreshElections()
+            try {
+                electionRepository.refreshInformation()
+            } catch (e: Exception) {
+                Timber.i(" Exception Calling RefreshElection" + e.localizedMessage)
+            }
             Timber.i("After Calling api")
             //get saved data from local storage
         }

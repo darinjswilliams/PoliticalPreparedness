@@ -40,8 +40,10 @@ override fun onCreateView(
     val binding = FragmentElectionBinding.inflate(inflater)
 
     //TODO: Add binding values
+    // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
     binding.lifecycleOwner = this
 
+    // Giving the binding access to the OverviewViewModel
     binding.viewModel = viewModel
 
 
