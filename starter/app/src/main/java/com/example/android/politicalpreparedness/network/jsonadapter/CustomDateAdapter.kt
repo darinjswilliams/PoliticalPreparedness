@@ -29,6 +29,6 @@ class CustomDateAdapter: JsonAdapter<Date>(){
     }
 
     companion object {
-        const val SERVER_FORMAT = ("yyyy-MM-dd") // define your server format here
+        const val SERVER_FORMAT = ("yyyy-MM-dd")
     }
 }

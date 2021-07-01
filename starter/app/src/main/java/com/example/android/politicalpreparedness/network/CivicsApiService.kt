@@ -13,8 +13,8 @@ import retrofit2.http.GET
 
 // TODO: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
 private val moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
     .add(ElectionAdapter())
+    .add(KotlinJsonAdapterFactory())
     .add(CustomDateAdapter())
     .build()
 

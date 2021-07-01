@@ -13,6 +13,8 @@ import java.lang.Exception
 
 class CivicsRepository(private val database: ElectionDatabase) {
 
+
+
     suspend fun refreshInformation(){
         withContext(Dispatchers.IO){
             refreshElections()
