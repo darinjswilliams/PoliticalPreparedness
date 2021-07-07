@@ -25,7 +25,7 @@ object ParseDate {
     }
 }
 
-sealed class Results <out T: Any?>{
-    data class Success<out T: Any?>(val data: T?) : Results<T>()
-    data class Error(val message: String) : Results<Nothing>()
+sealed class NetworkResult <out T: Any?>{
+    data class Success<out T: Any?>(val data: T?) : NetworkResult<T>()
+    data class Error(val message: String) : NetworkResult<Nothing>()
 }

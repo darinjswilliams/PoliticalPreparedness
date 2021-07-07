@@ -17,7 +17,7 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
     private val _elections = MutableLiveData<Election>()
 
     //TODO: Create live data val for saved elections
-    private val _savedElections = MutableLiveData<Election>();
+    private val _savedElections = MutableLiveData<Election>()
 
 
     //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
@@ -50,7 +50,7 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
             try {
                 electionRepository.refreshInformation()
             } catch (e: Exception) {
-                Timber.i(" Exception Calling RefreshElection" + e.localizedMessage)
+                Timber.i(" Exception Calling RefreshElection%s", e.localizedMessage)
             }
             Timber.i("After Calling api")
             //get saved data from local storage
@@ -63,9 +63,7 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
 
     //prevent unwanted naivation
     fun displayElectionCompleted() {
-        _navigateToElectionsProperty.let {
-            it.value = null
-        }
+        _navigateToElectionsProperty.value = null
     }
 
     private fun buildElectionList() = listOf(

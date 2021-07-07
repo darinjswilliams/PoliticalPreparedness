@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.election.adapter.ElectionListener
-import com.example.android.politicalpreparedness.launch.LaunchFragmentDirections
 
 class ElectionsFragment : Fragment() {
 
@@ -34,7 +32,7 @@ override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-): View? {
+): View {
 
     //TODO: Add ViewModel values and create ViewModel
     val binding = FragmentElectionBinding.inflate(inflater)
@@ -45,7 +43,6 @@ override fun onCreateView(
 
     // Giving the binding access to the OverviewViewModel
     binding.viewModel = viewModel
-
 
     //TODO: Link elections to voter info
 
