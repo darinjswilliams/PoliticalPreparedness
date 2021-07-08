@@ -39,7 +39,7 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
     //Repository and Database
     private val database = getInstance(application)
     private val electionRepository = CivicsRepository(database)
-    val electionList  = buildElectionList().toMutableList()
+    val electionList  = electionRepository.elections
 
     //init is called immediately when this ViewModel is created
     init {
@@ -66,20 +66,20 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
         _navigateToElectionsProperty.value = null
     }
 
-    private fun buildElectionList() = listOf(
-        Election(
-            200, "Test",
-            getCurrentDateTime(), Division("203", "US", "Texas")
-        ),
-        Election(
-            300, "Test 2",
-            getCurrentDateTime(), Division("304", "US", "Ok")
-        ),
-        Election(
-            400, "Test 2",
-            getCurrentDateTime(), Division("756", "US", "LA")
-        )
-
-    )
+//    private fun buildElectionList() = listOf(
+//        Election(
+//            200, "Test",
+//            getCurrentDateTime(), Division("203", "US", "Texas")
+//        ),
+//        Election(
+//            300, "Test 2",
+//            getCurrentDateTime(), Division("304", "US", "Ok")
+//        ),
+//        Election(
+//            400, "Test 2",
+//            getCurrentDateTime(), Division("756", "US", "LA")
+//        )
+//
+//    )
 
 }

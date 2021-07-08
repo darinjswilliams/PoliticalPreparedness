@@ -8,6 +8,8 @@
     <string name="find_my_representative_button">Find My Representative Button</string>
     <string name="find_my_representatives">FIND MY REPRESENTATIVES</string>
     <string name="upcoming_elections">UPCOMING ELECTIONS</string>
+    <string name="election_name">Election Name</string>
+    <string name="election_date_and_time">Election Date and Time</string>
 
     <!-- TODO: Add necessary string values -->
 
