@@ -6,18 +6,21 @@ import com.example.android.politicalpreparedness.network.models.ElectionResponse
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import com.example.android.politicalpreparedness.utils.Constants
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.util.*
 
 
 // TODO: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
 private val moshi = Moshi.Builder()
     .add(ElectionAdapter())
     .add(KotlinJsonAdapterFactory())
-    .add(CustomDateAdapter())
+//    .add(CustomDateAdapter())
+    .add(Date::class.java, Rfc3339DateJsonAdapter())
     .build()
 
 private val retrofit = Retrofit.Builder()
