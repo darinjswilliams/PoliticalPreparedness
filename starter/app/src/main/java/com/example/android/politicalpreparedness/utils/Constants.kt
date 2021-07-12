@@ -11,6 +11,8 @@ object Constants {
     const val ELECTIONS_FEED = "elections"
     const val REPRESENTATIVE_FEED = "representatives"
     const val VOTER_INFO_FEED = "voterinfo"
+    const val VOTER_ADDRESS = "address"
+    const val VOTER_ID = "electionId"
     const val API_QUERY_DATE_FORMAT = "YYYY-MM-dd"
 
 }

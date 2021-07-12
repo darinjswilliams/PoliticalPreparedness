@@ -40,13 +40,8 @@
         android:name="com.example.android.politicalpreparedness.election.ElectionsFragment"
         android:label="fragment_elections">
         <action
-            android:id="@+id/action_electionsFragment_to_electionsDetailFragment"
-            app:destination="@id/electionsDetailFragment" />
+            android:id="@+id/action_electionsFragment_to_voterInfoFragment"
+            app:destination="@id/voterInfoFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/electionsDetailFragment"
-        android:name="com.example.android.politicalpreparedness.election.ElectionsDetailFragment"
-        android:label="fragment_elections_detail"
-        tools:layout="@layout/fragment_elections_detail" />
 
 </navigation>

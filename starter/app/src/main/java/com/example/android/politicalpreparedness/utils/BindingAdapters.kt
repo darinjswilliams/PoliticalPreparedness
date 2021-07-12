@@ -8,7 +8,8 @@ import timber.log.Timber
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Election>?){
-    Timber.i("bindRecyclerViewCalled")
+    Timber.i("bindRecyclerViewCalled: size of data" + data?.size)
+    Timber.i("bindRecyclerViewCalled: size of data %s " , data)
     val adapter = recyclerView.adapter as ElectionListAdapter
     adapter.submitList(data)
 }

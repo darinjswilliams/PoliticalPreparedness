@@ -1,7 +1,11 @@
 package com.example.android.politicalpreparedness.network.models
 
+import android.os.Parcelable
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class AdministrationBody (
         val name: String? = null,
@@ -9,4 +13,4 @@ data class AdministrationBody (
         val votingLocationFinderUrl: String? = null,
         val ballotInfoUrl: String? = null,
         val correspondenceAddress: Address? = null
-)
+) : Parcelable

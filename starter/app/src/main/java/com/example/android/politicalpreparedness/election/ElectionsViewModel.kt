@@ -58,6 +58,8 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun displayElections(election: Election) {
+        Timber.i("Election ID: ${election.id}")
+        Timber.i("Election State & Country: ${election.division.state}, ${election.division.country}")
         _navigateToElectionsProperty.value = election
     }
 
@@ -65,21 +67,4 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
     fun displayElectionCompleted() {
         _navigateToElectionsProperty.value = null
     }
-
-//    private fun buildElectionList() = listOf(
-//        Election(
-//            200, "Test",
-//            getCurrentDateTime(), Division("203", "US", "Texas")
-//        ),
-//        Election(
-//            300, "Test 2",
-//            getCurrentDateTime(), Division("304", "US", "Ok")
-//        ),
-//        Election(
-//            400, "Test 2",
-//            getCurrentDateTime(), Division("756", "US", "LA")
-//        )
-//
-//    )
-
 }

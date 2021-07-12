@@ -5,10 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.election.adapter.ElectionListener
+import com.example.android.politicalpreparedness.voterInfo.VoterInfoFragment
+import com.example.android.politicalpreparedness.voterInfo.VoterInfoViewModel
+import timber.log.Timber
 
 class ElectionsFragment : Fragment() {
 
@@ -27,6 +32,7 @@ class ElectionsFragment : Fragment() {
             ElectionsViewModelFactory(activity.application)
         ).get(ElectionsViewModel::class.java)
     }
+
 
 override fun onCreateView(
     inflater: LayoutInflater,
@@ -52,7 +58,14 @@ override fun onCreateView(
         viewModel.displayElections(it)
     })
 
-
+    viewModel.navigateToElectionsProperty.observe(viewLifecycleOwner, Observer {
+        if(null != it){
+            Timber.i("Navigate to VoterInfo")
+            this.findNavController().navigate(
+                ElectionsFragmentDirections
+                    .actionElectionsFragmentToVoterInfoFragment(it.id, it.division))
+        }
+    })
 
 
     return binding.root

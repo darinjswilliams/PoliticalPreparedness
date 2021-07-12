@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="@{electionProperty.division.state}"
+            android:text="@{electionProperty.electionDay.toString()}"
             tools:text="@string/election_date_and_time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/electionName" />

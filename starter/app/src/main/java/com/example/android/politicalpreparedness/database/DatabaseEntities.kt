@@ -14,7 +14,6 @@ data class ElectionEntity constructor(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "name")val name: String,
     @ColumnInfo(name = "electionDay")val electionDay: Date,
-    @ColumnInfo(name = "isFollowed") var isFollowed: Boolean = false,
     @Embedded(prefix = "division_") @Json(name="ocdDivisionId") val division: Division
 )
 
@@ -26,7 +25,6 @@ fun List<ElectionEntity>.asElectionDomainModel(): List<Election>{
             id = it.id,
             name = it.name,
             electionDay = it.electionDay,
-            isFollowed =  it.isFollowed,
             division = it.division
         )
     }

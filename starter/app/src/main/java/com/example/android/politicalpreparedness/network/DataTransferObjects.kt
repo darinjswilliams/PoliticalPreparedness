@@ -11,7 +11,6 @@ data class NetworkElection(
     val id: Int,
     val name: String,
     val electionDay: Date,
-    var isFollowed: Boolean = false,
     val division: Division
 )
 
@@ -21,7 +20,6 @@ fun List<NetworkElection>.asDatabaseModel(): List<ElectionEntity>{
             id = it.id,
             name = it.name,
             electionDay = it.electionDay,
-            isFollowed =  it.isFollowed,
             division = it.division
         )
     }

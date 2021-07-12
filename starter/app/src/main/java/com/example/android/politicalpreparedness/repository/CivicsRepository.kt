@@ -7,6 +7,7 @@ import com.example.android.politicalpreparedness.database.asElectionDomainModel
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.NetworkElection
 import com.example.android.politicalpreparedness.network.asDatabaseModel
+import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -28,8 +29,30 @@ class CivicsRepository(private val database: ElectionDatabase) {
         withContext(Dispatchers.IO) {
             refreshElections()
         }
+    }
 
+    suspend fun getVoterInformation(electionId: Int, division: Division){
+        withContext(Dispatchers.IO) {
+            refreshVoterInformation(electionId, division)
+        }
+    }
 
+    private suspend fun refreshVoterInformation(electionId: Int, division: Division) {
+       Timber.i("CivicsRespository: VoterInformation")
+
+        //format the state and country
+        try {
+            val stateCounty = "${division.country},${division.state}"
+            Timber.i("State and Country Information: $stateCounty ElectionId: $electionId")
+
+            val voterInfoResult = CivicsApi.retrofitService.getVoterInfo(stateCounty, electionId.toLong())
+
+            //Insert data into local database for offline cache
+            Timber.i("Voter Information Results $voterInfoResult")
+
+        } catch (e: Exception) {
+            Timber.i("Exception Voter Information Results ${e.localizedMessage}")
+        }
     }
 
     private suspend fun refreshElections() {
@@ -45,7 +68,6 @@ class CivicsRepository(private val database: ElectionDatabase) {
                     it.id,
                     it.name,
                     it.electionDay,
-                    it.isFollowed,
                     it.division
                 )
             }

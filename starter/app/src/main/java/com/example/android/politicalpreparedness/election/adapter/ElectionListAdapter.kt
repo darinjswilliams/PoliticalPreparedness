@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.databinding.ElectionViewItemBinding
 import com.example.android.politicalpreparedness.network.models.Election
+import timber.log.Timber
 
 class ElectionListAdapter(private val clickListener: ElectionListener) :
     ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback) {
@@ -30,9 +31,15 @@ class ElectionListAdapter(private val clickListener: ElectionListener) :
     //TODO: Bind ViewHolder
     override fun onBindViewHolder(holder: ElectionViewHolder, position: Int) {
         val electionProperty = getItem(position)
+        Timber.i("Here is the position: $position")
+
         holder.itemView.setOnClickListener {
             clickListener.onClick(electionProperty)
+            Timber.i("ElectionId:.." + electionProperty.id)
+            Timber.i("Division : State: .. ${electionProperty.division.state}" )
+            Timber.i("Division : Country: .. ${electionProperty.division.country}" )
         }
+        holder.bind(electionProperty)
     }
 
     //Called when the current List is updated
@@ -52,9 +59,8 @@ class ElectionListener(val clickListener: (election: Election) -> Unit) {
 //TODO: Create ElectionViewHolder
 class ElectionViewHolder(private var binding: ElectionViewItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(clickListener: ElectionListener, election: Election) {
+    fun bind(election: Election) {
         binding.electionProperty = election
-        binding.clickListner = clickListener
         //evaluate pending values and update views
         binding.executePendingBindings()
     }
