@@ -11,9 +11,16 @@ interface ElectionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertElections(vararg election: ElectionEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertVoterInfo(vararg voterInfo: VoterInfoEntity)
+
     //TODO: Add select all election query
     @Query("Select * from election_table ORDER BY electionDay")
     fun getElection(): LiveData<List<ElectionEntity>>
+
+
+    @Query("Select * from voter_info_table")
+    fun getVoterInformation(): LiveData<List<VoterInfoEntity>>
 
     //TODO: Add select single election query
 
@@ -27,7 +34,11 @@ interface ElectionDao {
     @Query("DELETE FROM election_table WHERE id =:id")
     suspend fun deleteFollowedElection(id: Int) : Int
 
+    @Query("DELETE FROM voter_info_table")
+    suspend fun deleteVoterInformation()
+
     //TODO: Add clear query
+
 
 
 }

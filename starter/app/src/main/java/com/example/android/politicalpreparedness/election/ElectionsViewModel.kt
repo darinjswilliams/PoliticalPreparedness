@@ -59,7 +59,7 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun displayElections(election: Election) {
         Timber.i("Election ID: ${election.id}")
-        Timber.i("Election State & Country: ${election.division.state}, ${election.division.country}")
+        Timber.i("Election State & Country: ${election.division!!.state}, ${election.division!!.country}")
         _navigateToElectionsProperty.value = election
     }
 

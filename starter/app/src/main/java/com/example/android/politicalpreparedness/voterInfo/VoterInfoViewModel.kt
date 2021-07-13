@@ -29,6 +29,12 @@ class VoterInfoViewModel(
     //TODO: Add var and methods to populate voter info
 
     //TODO: Add var and methods to support loading URLs
+    private val _url = MutableLiveData<String>()
+
+    val url: LiveData<String>
+    get() = _url
+
+
 
     //TODO: Add var and methods to save and remove elections to local database
     //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
@@ -39,6 +45,8 @@ class VoterInfoViewModel(
 
     private val database = getInstance(application)
     private val civicsRepository = CivicsRepository(database)
+    val voterInfoList = civicsRepository.voterInformation
+
 
     init {
         viewModelScope.launch {
@@ -56,6 +64,16 @@ class VoterInfoViewModel(
             }
 
         }
+    }
+
+
+
+
+
+
+    fun navigateToWebSite(url: String) {
+        Timber.i("URL:  $url")
+        _url.value = url
     }
 
 }

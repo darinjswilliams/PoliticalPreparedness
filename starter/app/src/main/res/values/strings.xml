@@ -10,6 +10,7 @@
     <string name="upcoming_elections">UPCOMING ELECTIONS</string>
     <string name="election_name">Election Name</string>
     <string name="election_date_and_time">Election Date and Time</string>
+    <string name="voter_information_header">Election Information</string>
 
     <!-- TODO: Add necessary string values -->
 

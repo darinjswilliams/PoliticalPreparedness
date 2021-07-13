@@ -4,8 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.network.models.VoterInfo
 import com.squareup.moshi.Json
 import java.util.*
 
@@ -29,3 +31,26 @@ fun List<ElectionEntity>.asElectionDomainModel(): List<Election>{
         )
     }
 }
+
+@Entity(tableName = "voter_info_table")
+data class VoterInfoEntity constructor(
+    @PrimaryKey val id: Int,
+    @ColumnInfo(name = "name")val name: String? = null,
+    @ColumnInfo(name = "electionInfoUrl") val electionInfoUrl: String? = null,
+    @ColumnInfo(name = "votingLocationFinderUrl") val votingLocationFinderUrl: String? = null,
+    @ColumnInfo(name = "ballotInfoUrl") val ballotInfoUrl: String? = null,
+)
+
+fun List<VoterInfoEntity>.asVoterInfoDomainModel() : List<VoterInfo>{
+    return  map {
+        VoterInfo(
+            id = it.id,
+            name = it.name,
+            electionInfoUrl = it.electionInfoUrl,
+            votingLocationFinderUrl = it.votingLocationFinderUrl,
+            ballotInfoUrl = it.votingLocationFinderUrl
+        )
+    }
+}
+
+

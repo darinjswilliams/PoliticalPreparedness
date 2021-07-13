@@ -36,8 +36,8 @@ class ElectionListAdapter(private val clickListener: ElectionListener) :
         holder.itemView.setOnClickListener {
             clickListener.onClick(electionProperty)
             Timber.i("ElectionId:.." + electionProperty.id)
-            Timber.i("Division : State: .. ${electionProperty.division.state}" )
-            Timber.i("Division : Country: .. ${electionProperty.division.country}" )
+            Timber.i("Division : State: .. ${electionProperty.division!!.state}" )
+            Timber.i("Division : Country: .. ${electionProperty.division!!.country}" )
         }
         holder.bind(electionProperty)
     }

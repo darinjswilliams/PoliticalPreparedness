@@ -63,7 +63,7 @@ override fun onCreateView(
             Timber.i("Navigate to VoterInfo")
             this.findNavController().navigate(
                 ElectionsFragmentDirections
-                    .actionElectionsFragmentToVoterInfoFragment(it.id, it.division))
+                    .actionElectionsFragmentToVoterInfoFragment(it.id, it.division!!))
         }
     })
 

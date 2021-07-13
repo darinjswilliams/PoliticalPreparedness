@@ -19,7 +19,6 @@ import java.util.*
 private val moshi = Moshi.Builder()
     .add(ElectionAdapter())
     .add(KotlinJsonAdapterFactory())
-//    .add(CustomDateAdapter())
     .add(Date::class.java, Rfc3339DateJsonAdapter())
     .build()
 
