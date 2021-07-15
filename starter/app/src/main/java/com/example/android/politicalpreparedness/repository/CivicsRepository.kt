@@ -23,7 +23,7 @@ class CivicsRepository(private val database: ElectionDatabase) {
         it?.asElectionDomainModel()
     }
 
-    val voterInformation: LiveData<List<VoterInfo>> = Transformations.map(
+    val voterInformation: LiveData<VoterInfo> = Transformations.map(
         database.electionDao.getVoterInformation()
     ){
         it?.asVoterInfoDomainModel()
@@ -63,6 +63,8 @@ class CivicsRepository(private val database: ElectionDatabase) {
                     it.electionAdministrationBody.ballotInfoUrl!!
                 )
             }
+
+            database.electionDao.deleteVoterInformation()
 
             //insert minimum voter information into database
             voterInfoList?.asVoterInfoDatabaseModel()?.let {

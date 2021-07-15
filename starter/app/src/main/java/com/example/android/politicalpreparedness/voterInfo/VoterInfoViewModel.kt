@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.database.ElectionDatabase.Companion.getInstance
+import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.VoterInfo
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
@@ -27,12 +28,25 @@ class VoterInfoViewModel(
 
 
     //TODO: Add var and methods to populate voter info
+    private val _voterInformationUrl = MutableLiveData<String>()
+    val voterInformationUrl: LiveData<String>
+        get() = _voterInformationUrl
+
+    private val _ballotUrl = MutableLiveData<String>()
+    val ballotUrl: LiveData<String>
+        get() = _ballotUrl
+
 
     //TODO: Add var and methods to support loading URLs
     private val _url = MutableLiveData<String>()
 
     val url: LiveData<String>
     get() = _url
+
+    private val _voterResponse = MutableLiveData<VoterInfoResponse>()
+    val voterResponse: LiveData<VoterInfoResponse>
+    get() = _voterResponse
+
 
 
 
@@ -45,7 +59,7 @@ class VoterInfoViewModel(
 
     private val database = getInstance(application)
     private val civicsRepository = CivicsRepository(database)
-    val voterInfoList = civicsRepository.voterInformation
+    val voterInfoData = civicsRepository.voterInformation
 
 
     init {
@@ -59,21 +73,25 @@ class VoterInfoViewModel(
                             "Division State ${division.state}"
                 )
                 civicsRepository.getVoterInformation(electionId, division)
+
+                val stateCounty = "${division.country},${division.state}"
+                _voterResponse.value = CivicsApi.retrofitService.getVoterInfo(stateCounty, electionId.toLong())
+
+
             } catch (e: Exception) {
-                Timber.i("Exception Calling Get Voter Information")
+                Timber.i("Exception Calling Get Voter Information: ${e.localizedMessage}")
             }
 
         }
     }
 
-
-
-
-
-
-    fun navigateToWebSite(url: String) {
-        Timber.i("URL:  $url")
+    fun navigateToWebSite(url: String){
+        Timber.i("URL: $url")
         _url.value = url
+    }
+
+    fun navigationToWebSiteComplete(){
+        _url.value = null
     }
 
 }

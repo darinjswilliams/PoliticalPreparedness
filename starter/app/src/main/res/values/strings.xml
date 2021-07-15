@@ -11,6 +11,8 @@
     <string name="election_name">Election Name</string>
     <string name="election_date_and_time">Election Date and Time</string>
     <string name="voter_information_header">Election Information</string>
+    <string name="voting_location">Voting Locations</string>
+    <string name="ballot_information">Ballot Information</string>
 
     <!-- TODO: Add necessary string values -->
 

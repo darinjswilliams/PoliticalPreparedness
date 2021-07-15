@@ -1,5 +1,7 @@
 package com.example.android.politicalpreparedness.voterInfo
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -8,6 +10,8 @@ import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBi
 import timber.log.Timber
 
 class VoterInfoFragment : Fragment() {
+
+    private lateinit var viewModel: VoterInfoViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,8 +25,9 @@ class VoterInfoFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val application = requireNotNull(activity).application
-        val electionId = VoterInfoFragmentArgs.fromBundle(requireArguments()).argElectionId
-        val divisionInfo = VoterInfoFragmentArgs.fromBundle(requireArguments()).argDivision
+        val bundle = VoterInfoFragmentArgs.fromBundle(requireArguments())
+        val electionId = bundle.argElectionId
+        val divisionInfo = bundle.argDivision
 
         //TODO: Populate voter info -- hide views without provided data.
         /**
@@ -36,12 +41,20 @@ class VoterInfoFragment : Fragment() {
         val viewModelFactory = VoterInfoViewModelFactory(electionId, divisionInfo, application)
 
         //Give binding access to the MainViewModel
-        binding.viewModel = ViewModelProvider(
+        viewModel = ViewModelProvider(
             this,
             viewModelFactory
         ).get(VoterInfoViewModel::class.java)
 
+        binding.viewModel = viewModel
+
         //TODO: Handle loading of URLs
+        viewModel.url.observe(viewLifecycleOwner, {
+            it?.let {
+                loadURLs(it)
+            }
+        })
+
 
         //TODO: Handle save button UI state
         //TODO: cont'd Handle save button clicks
@@ -50,6 +63,12 @@ class VoterInfoFragment : Fragment() {
         //TODO: Create method to load URL intents
 
         return binding.root
+    }
+
+    fun loadURLs(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
+        viewModel.navigationToWebSiteComplete()
     }
 
 }

@@ -20,7 +20,7 @@ interface ElectionDao {
 
 
     @Query("Select * from voter_info_table")
-    fun getVoterInformation(): LiveData<List<VoterInfoEntity>>
+    fun getVoterInformation(): LiveData<VoterInfoEntity>
 
     //TODO: Add select single election query
 

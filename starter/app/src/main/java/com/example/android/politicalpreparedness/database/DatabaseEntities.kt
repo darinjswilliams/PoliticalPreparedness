@@ -41,16 +41,14 @@ data class VoterInfoEntity constructor(
     @ColumnInfo(name = "ballotInfoUrl") val ballotInfoUrl: String? = null,
 )
 
-fun List<VoterInfoEntity>.asVoterInfoDomainModel() : List<VoterInfo>{
-    return  map {
-        VoterInfo(
-            id = it.id,
-            name = it.name,
-            electionInfoUrl = it.electionInfoUrl,
-            votingLocationFinderUrl = it.votingLocationFinderUrl,
-            ballotInfoUrl = it.votingLocationFinderUrl
+fun VoterInfoEntity.asVoterInfoDomainModel() : VoterInfo{
+    return VoterInfo(
+            id = this.id,
+            name = this.name,
+            electionInfoUrl = this.electionInfoUrl,
+            votingLocationFinderUrl = this.votingLocationFinderUrl,
+            ballotInfoUrl = this.votingLocationFinderUrl
         )
     }
-}
 
 
