@@ -2,20 +2,21 @@ package com.example.android.politicalpreparedness.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.example.android.politicalpreparedness.database.ElectionDatabase
-import com.example.android.politicalpreparedness.database.VoterInfoEntity
-import com.example.android.politicalpreparedness.database.asElectionDomainModel
-import com.example.android.politicalpreparedness.database.asVoterInfoDomainModel
+import com.example.android.politicalpreparedness.database.*
 import com.example.android.politicalpreparedness.network.*
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.VoterInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 import timber.log.Timber
 import java.lang.Exception
 
 class CivicsRepository(private val database: ElectionDatabase) {
+
+    lateinit var electionInfoForVoters: Election
+    lateinit var informationForVoters: VoterInfo
 
     val elections: LiveData<List<Election>> = Transformations.map(
         database.electionDao.getElection()
@@ -23,12 +24,12 @@ class CivicsRepository(private val database: ElectionDatabase) {
         it?.asElectionDomainModel()
     }
 
-    val voterInformation: LiveData<VoterInfo> = Transformations.map(
-        database.electionDao.getVoterInformation()
-    ){
-        it?.asVoterInfoDomainModel()
-    }
 
+    //    val voterInformation: LiveData<VoterInfo> = Transformations.map(
+//        database.electionDao.getVoterInformation()
+//    ){
+//        it?.asVoterInfoDomainModel()
+//    }
 
 
     suspend fun refreshInformation() {
@@ -40,6 +41,7 @@ class CivicsRepository(private val database: ElectionDatabase) {
     suspend fun getVoterInformation(electionId: Int, division: Division) {
         withContext(Dispatchers.IO) {
             refreshVoterInformation(electionId, division)
+            getVoterElectionInfo(electionId)
         }
     }
 
@@ -54,11 +56,17 @@ class CivicsRepository(private val database: ElectionDatabase) {
             val voterInfoResult =
                 CivicsApi.retrofitService.getVoterInfo(stateCounty, electionId.toLong())
 
+            val electionInfo =
+                database.electionDao.getElectionById(electionId)?.asSingleElectionDomainModel()
+
+
             //Insert data into local database for offline cache
             Timber.i("Voter Information Results ${voterInfoResult.state}")
             val voterInfoList = voterInfoResult.state?.map {
                 NetworkVoterInfo(
                     electionId,
+                    electionInfo!!.name,
+                    electionInfo!!.electionDay,
                     it.electionAdministrationBody.votingLocationFinderUrl!!,
                     it.electionAdministrationBody.ballotInfoUrl!!
                 )
@@ -71,6 +79,15 @@ class CivicsRepository(private val database: ElectionDatabase) {
                 database.electionDao.insertVoterInfo(
                     *it.toTypedArray()
                 )
+
+
+                val voterInformation =
+                    database.electionDao.getVoterInformation()?.asVoterInfoDomainModel()
+
+                if (voterInformation != null) {
+                    informationForVoters = voterInformation
+                }
+
             }
         } catch (e: Exception) {
             Timber.i("Exception Voter Information Results ${e.localizedMessage}")
@@ -84,6 +101,7 @@ class CivicsRepository(private val database: ElectionDatabase) {
         try {
             val electionResults = CivicsApi.retrofitService.getElections()
             Timber.i("Elections Results:%s", electionResults)
+
 
             val electionList = electionResults.elections.map {
                 NetworkElection(
@@ -104,5 +122,28 @@ class CivicsRepository(private val database: ElectionDatabase) {
 
     }
 
+    private suspend fun getVoterElectionInfo(electionId: Int) {
+        Timber.i("ElectionId: $electionId")
+
+        val electionInfo =
+            database.electionDao.getElectionById(electionId)?.asSingleElectionDomainModel()
+
+        Timber.i("Election Values ${electionInfo?.name}")
+
+        if (electionInfo != null) {
+            electionInfoForVoters = electionInfo
+        }
+
+    }
+
+    suspend fun insertFollowedElection(voterInfo: VoterInfo) {
+
+        withContext(Dispatchers.IO) {
+
+            database.electionDao.insertFollowElection(voterInfo.asVoterInfoToFollowedElectionDatabaseModal())
+            Timber.i("INSERTING Followed Election:  $voterInfo")
+
+        }
+    }
 
 }

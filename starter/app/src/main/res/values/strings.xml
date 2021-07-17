@@ -13,6 +13,9 @@
     <string name="voter_information_header">Election Information</string>
     <string name="voting_location">Voting Locations</string>
     <string name="ballot_information">Ballot Information</string>
+    <string name="followed">Follow Election</string>
+    <string name="unfollowed">UnFollow Election</string>
+
 
     <!-- TODO: Add necessary string values -->
 

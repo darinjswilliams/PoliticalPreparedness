@@ -5,7 +5,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
 import timber.log.Timber
 
@@ -57,15 +61,22 @@ class VoterInfoFragment : Fragment() {
 
 
         //TODO: Handle save button UI state
-        //TODO: cont'd Handle save button clicks
+        //TODO: cont'd Handle save button clicks - created onClick Handler
+        viewModel.navigateToElection.observe(viewLifecycleOwner, Observer {
 
-
-        //TODO: Create method to load URL intents
+            if(it == true){
+            findNavController().navigate(
+                VoterInfoFragmentDirections.actionVoterInfoFragmentToElectionsFragment()
+            )
+            viewModel.doneNavigation()
+                binding.followedButton.text = getString(R.string.unfollowed)
+        }})
 
         return binding.root
     }
 
-    fun loadURLs(url: String) {
+    //TODO: Create method to load URL intents
+    private fun loadURLs(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
         viewModel.navigationToWebSiteComplete()

@@ -14,28 +14,40 @@ interface ElectionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertVoterInfo(vararg voterInfo: VoterInfoEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFollowElection(vararg followedElection: FollowedElectionEntity)
+
     //TODO: Add select all election query
-    @Query("Select * from election_table ORDER BY electionDay")
+    @Query("SELECT * FROM election_table ORDER BY name")
     fun getElection(): LiveData<List<ElectionEntity>>
 
+//    @Query("SELECT * FROM followed_election_table")
+//    suspend fun getFollowedElection(): LiveData<List<FollowedElectionEntity>>
 
-    @Query("Select * from voter_info_table")
-    fun getVoterInformation(): LiveData<VoterInfoEntity>
 
     //TODO: Add select single election query
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFollowElection(election: ElectionEntity)
+    @Query("SELECT * FROM  election_table WHERE id =:id")
+    suspend fun getElectionById(id: Int): ElectionEntity?
 
-//    @Query("SELECT id from followed_table WHERE id =:id AND  id IN election_table")
-//    suspend fun getFollowedElection(id: Int): Int
+    @Query("SELECT * FROM voter_info_table LIMIT 1 ")
+    fun getVoterInformation(): VoterInfoEntity?
+
 
     //TODO: Add delete query
     @Query("DELETE FROM election_table WHERE id =:id")
-    suspend fun deleteFollowedElection(id: Int) : Int
+    suspend fun deleteElection(id: Int)
 
     @Query("DELETE FROM voter_info_table")
     suspend fun deleteVoterInformation()
+
+    @Query("DELETE FROM followed_election_table WHERE id =:id")
+    suspend fun deletedFollowed(id: Int)
+
+    @Query("DELETE FROM election_table")
+    suspend fun deleteAllElection()
+
+
 
     //TODO: Add clear query
 
