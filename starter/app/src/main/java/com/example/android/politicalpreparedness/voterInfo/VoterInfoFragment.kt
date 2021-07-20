@@ -62,15 +62,26 @@ class VoterInfoFragment : Fragment() {
 
         //TODO: Handle save button UI state
         //TODO: cont'd Handle save button clicks - created onClick Handler
-        viewModel.navigateToElection.observe(viewLifecycleOwner, Observer {
+//        viewModel.navigateToElection.observe(viewLifecycleOwner, Observer {
+//
+//            if (it == true) {
+//                binding.followedButton.text = getString(R.string.followed)
+//            } else {
+//                binding.followedButton.text = getString(R.string.unfollowed)
+//            }
+////            android:text="@{ viewModel.navigateToElection ? @string/unfollowed : @string/followed }"
+//
+////            if(it == true ){
+////            findNavController().navigate(
+////                VoterInfoFragmentDirections.actionVoterInfoFragmentToElectionsFragment()
+////            )
+////            viewModel.doneNavigation()
+////        }
+////
+//        })
 
-            if(it == true){
-            findNavController().navigate(
-                VoterInfoFragmentDirections.actionVoterInfoFragmentToElectionsFragment()
-            )
-            viewModel.doneNavigation()
-                binding.followedButton.text = getString(R.string.unfollowed)
-        }})
+
+
 
         return binding.root
     }

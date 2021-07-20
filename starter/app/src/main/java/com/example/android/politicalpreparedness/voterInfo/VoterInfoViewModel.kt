@@ -5,16 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.database.ElectionDatabase.Companion.getInstance
-import com.example.android.politicalpreparedness.database.ElectionEntity
-import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.VoterInfo
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import com.example.android.politicalpreparedness.repository.CivicsRepository
-import com.example.android.politicalpreparedness.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -64,7 +60,6 @@ class VoterInfoViewModel(
         get() = _navigateToElection
 
 
-
     //TODO: Add var and methods to save and remove elections to local database
     //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
 
@@ -99,6 +94,7 @@ class VoterInfoViewModel(
 //                _electionInfo.value = civicsRepository.electionInfoForVoters
 
 //                Timber.i("Title ${_electionInfo.value?.name}")
+                _navigateToElection.value = civicsRepository.existingFollowedExisting
 
                 Timber.i("Voter Information DB: ${_voterInfo.value?.name}  and ${_voterInfo.value?.ballotInfoUrl}")
 
@@ -132,9 +128,20 @@ class VoterInfoViewModel(
     fun onFollowedElectionTracking() {
         viewModelScope.launch {
             Timber.i("OnFollowedElection: ")
-            val followedElection = voterInfo.value ?: return@launch
-            civicsRepository.insertFollowedElection(followedElection)
-            _navigateToElection.value = true
+
+
+            Timber.i("BEFORE IS FOLLOWED ${civicsRepository.existingFollowedExisting}")
+            Timber.i("BEFORE IS FOLLOWED ${_navigateToElection.value}")
+
+            //Voter Info value is populated when viewmodel is launched
+//            val followedElection = voterInfo.value ?: return@launch
+//            val followedElection = voterInfo.value
+
+            voterInfo.value?.let { civicsRepository.trackFollowedElection(it) }
+
+            _navigateToElection.value = civicsRepository.existingFollowedExisting
         }
     }
+
+
 }

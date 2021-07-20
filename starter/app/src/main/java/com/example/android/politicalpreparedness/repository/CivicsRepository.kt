@@ -6,6 +6,7 @@ import com.example.android.politicalpreparedness.database.*
 import com.example.android.politicalpreparedness.network.*
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.network.models.FollowedElectionInfo
 import com.example.android.politicalpreparedness.network.models.VoterInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,6 +18,7 @@ class CivicsRepository(private val database: ElectionDatabase) {
 
     lateinit var electionInfoForVoters: Election
     lateinit var informationForVoters: VoterInfo
+    var existingFollowedExisting: Boolean = false
 
     val elections: LiveData<List<Election>> = Transformations.map(
         database.electionDao.getElection()
@@ -88,6 +90,27 @@ class CivicsRepository(private val database: ElectionDatabase) {
                     informationForVoters = voterInformation
                 }
 
+                //Check for Followed Election
+                val followedElection =
+                    voterInformation?.let { followed ->
+                        database.electionDao.getFollowedElection(followed.id)
+                            ?.asSingleFollowedElectionDomainModel()
+                    }
+
+                existingFollowedExisting = when (followedElection) {
+                    null -> true
+                    else -> false
+                }
+
+//                if (followedElection != null) {
+//                    Timber.i("EXISTING: STATE IS: STATE IS : True : ${followedElection.id}")
+//                    existingFollowedExisting = true
+//                } else {
+//                    Timber.i("DOES NOT EXIST: STATE IS FALSE: SET TO UNFOLLOWED: ${followedElection?.id}")
+//                    existingFollowedExisting = false
+//                }
+
+
             }
         } catch (e: Exception) {
             Timber.i("Exception Voter Information Results ${e.localizedMessage}")
@@ -136,13 +159,51 @@ class CivicsRepository(private val database: ElectionDatabase) {
 
     }
 
-    suspend fun insertFollowedElection(voterInfo: VoterInfo) {
+    suspend fun trackFollowedElection(voterInfo: VoterInfo) {
 
         withContext(Dispatchers.IO) {
 
-            database.electionDao.insertFollowElection(voterInfo.asVoterInfoToFollowedElectionDatabaseModal())
-            Timber.i("INSERTING Followed Election:  $voterInfo")
 
+            val voterInformation =
+                database.electionDao.getVoterInformation()?.asVoterInfoDomainModel()
+
+            val followedElection =
+                voterInformation?.let { followed ->
+                    database.electionDao.getFollowedElection(followed.id)
+                        ?.asSingleFollowedElectionDomainModel()
+                }
+
+
+            existingFollowedExisting = when (followedElection) {
+                null -> {
+                    Timber.i("DOES NOT EXIST: INSERTING Followed Election:  $voterInfo.id")
+                    database.electionDao.insertFollowElection(voterInfo.asVoterInfoToFollowedElectionDatabaseModal())
+                    true
+                }
+                else -> {
+                    Timber.i("EXISTING: DELETE STATE IS : True : ${followedElection.id}")
+                    database.electionDao.deletedFollowed(voterInfo.id)
+                    false
+                }
+            }
+
+        }
+    }
+
+    suspend fun deleteFollowedElection(id: Int) {
+        withContext(Dispatchers.IO) {
+            database.electionDao.deletedFollowed(id)
+            Timber.i("INSERTING Followed Election:  $id")
+
+            existingFollowedExisting = false
+        }
+    }
+
+
+    suspend fun checkForFollowedElection(id: Int) {
+        withContext(Dispatchers.IO) {
+            database.electionDao.getFollowedElection(id)
+            Timber.i("Check Followed Election:  $id")
         }
     }
 

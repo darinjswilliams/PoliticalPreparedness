@@ -21,6 +21,9 @@ interface ElectionDao {
     @Query("SELECT * FROM election_table ORDER BY name")
     fun getElection(): LiveData<List<ElectionEntity>>
 
+    @Query("SELECT * FROM followed_election_table WHERE id =:id")
+    suspend fun getFollowedElection(id: Int): FollowedElectionEntity?
+
 //    @Query("SELECT * FROM followed_election_table")
 //    suspend fun getFollowedElection(): LiveData<List<FollowedElectionEntity>>
 
