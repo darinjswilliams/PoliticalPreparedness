@@ -17,7 +17,6 @@ class CivicsRepository(private val database: ElectionDatabase) {
 
     lateinit var electionInfoForVoters: Election
     lateinit var informationForVoters: VoterInfo
-    var isFollowingElections = MutableLiveData<Boolean>()
 
     val elections: LiveData<List<Election>> = Transformations.map(
         database.electionDao.getElection()

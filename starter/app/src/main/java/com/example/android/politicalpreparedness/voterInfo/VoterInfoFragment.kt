@@ -5,10 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
 import timber.log.Timber
@@ -25,8 +22,6 @@ class VoterInfoFragment : Fragment() {
 
         //TODO: Add binding values
         val binding = FragmentVoterInfoBinding.inflate((inflater))
-
-        binding.lifecycleOwner = this
 
         val application = requireNotNull(activity).application
         val bundle = VoterInfoFragmentArgs.fromBundle(requireArguments())
@@ -62,7 +57,14 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
-
+        //This has bee
+        viewModel.isfollowingElection.observe(viewLifecycleOwner, {
+            if(it == true){
+                binding.followedButton.text = getString(R.string.unfollowed)
+            } else {
+                binding.followedButton.text = getString(R.string.followed)
+            }
+        })
 
         //TODO: Handle save button UI state
         //TODO: cont'd Handle save button clicks - created onClick Handler
