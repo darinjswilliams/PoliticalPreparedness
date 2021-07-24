@@ -1,8 +1,10 @@
 package com.example.android.politicalpreparedness.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.utils.SingleLiveEvent
 
 @Dao
 interface ElectionDao {
@@ -24,12 +26,7 @@ interface ElectionDao {
     @Query("SELECT * FROM followed_election_table WHERE id =:id")
     suspend fun getFollowedElection(id: Int): FollowedElectionEntity?
 
-//    @Query("SELECT * FROM followed_election_table")
-//    suspend fun getFollowedElection(): LiveData<List<FollowedElectionEntity>>
-
-
     //TODO: Add select single election query
-
     @Query("SELECT * FROM  election_table WHERE id =:id")
     suspend fun getElectionById(id: Int): ElectionEntity?
 

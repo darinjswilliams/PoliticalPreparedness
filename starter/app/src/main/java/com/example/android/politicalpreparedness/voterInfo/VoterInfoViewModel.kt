@@ -11,6 +11,7 @@ import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.VoterInfo
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import com.example.android.politicalpreparedness.repository.CivicsRepository
+import com.example.android.politicalpreparedness.utils.Result
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -55,8 +56,8 @@ class VoterInfoViewModel(
     val electionInfo: LiveData<Election>
         get() = _electionInfo
 
-    private val _navigateToElection = MutableLiveData<Boolean?>()
-    val navigateToElection: LiveData<Boolean?>
+    private val _navigateToElection = MutableLiveData<Boolean>()
+    val navigateToElection: LiveData<Boolean>
         get() = _navigateToElection
 
 
@@ -85,18 +86,24 @@ class VoterInfoViewModel(
                 civicsRepository.getVoterInformation(electionId, division)
 
 
-                val stateCounty = "${division.country},${division.state}"
-//                _voterResponse.value =
-//                    CivicsApi.retrofitService.getVoterInfo(stateCounty, electionId.toLong())
-
                 _voterInfo.value = civicsRepository.informationForVoters
-//
-//                _electionInfo.value = civicsRepository.electionInfoForVoters
 
-//                Timber.i("Title ${_electionInfo.value?.name}")
-                _navigateToElection.value = civicsRepository.existingFollowedExisting
+                _navigateToElection.value = civicsRepository.isFollowingElections.value
 
                 Timber.i("Voter Information DB: ${_voterInfo.value?.name}  and ${_voterInfo.value?.ballotInfoUrl}")
+                Timber.i("NAV TO ELC: $navigateToElection")
+
+                //check followed elections
+                _navigateToElection.value =  when(civicsRepository.checkForFollowedElection(electionId)){
+                    is Result.Success<*> -> {
+                        Timber.i("Init: Result is True")
+                        true
+                    }
+                    is Result.Error -> {
+                        Timber.i("Init: Result is False")
+                        false
+                    }
+                }
 
 
             } catch (e: Exception) {
@@ -114,10 +121,10 @@ class VoterInfoViewModel(
     fun navigationToWebSiteComplete() {
         _url.value = null
     }
-
-    fun doneNavigation() {
-        _navigateToElection.value = null
-    }
+//
+//    fun doneNavigation() {
+//        _navigateToElection.value = null
+//    }
 
     /**
      * insert the followed election into  database.
@@ -129,17 +136,31 @@ class VoterInfoViewModel(
         viewModelScope.launch {
             Timber.i("OnFollowedElection: ")
 
-
-            Timber.i("BEFORE IS FOLLOWED ${civicsRepository.existingFollowedExisting}")
             Timber.i("BEFORE IS FOLLOWED ${_navigateToElection.value}")
 
-            //Voter Info value is populated when viewmodel is launched
-//            val followedElection = voterInfo.value ?: return@launch
-//            val followedElection = voterInfo.value
 
-            voterInfo.value?.let { civicsRepository.trackFollowedElection(it) }
+            _navigateToElection.value =  when(
+                voterInfo.let {civicsRepository.checkForFollowedElection(voterInfo.value!!.id)}){
+                is Result.Success<*> -> {
+                    Timber.i("onFollowedElectionTracking: Result is True: ${voterInfo.value!!.id}")
+                    voterInfo.value?.let { civicsRepository.deleteFollowedElection(voterInfo.value!!) }
+                    true
+                }
+                is Result.Error -> {
+                    Timber.i("onFollowedElectionTracking: Result is False: ${voterInfo.value!!.id}")
+                    voterInfo.value?.let { civicsRepository.insertfollowElection(voterInfo.value!!) }
+                    false
+                }
+            }
 
-            _navigateToElection.value = civicsRepository.existingFollowedExisting
+//            if (_navigateToElection.value == true) {
+//                Timber.i("Calling Deleted  ${_navigateToElection.value}")
+//                voterInfo.value?.let { civicsRepository.deleteFollowedElection(voterInfo.value!!) }
+//            } else {
+//                Timber.i("Calling Insert  ${_navigateToElection.value}")
+//                voterInfo.value?.let { civicsRepository.insertfollowElection(voterInfo.value!!) }
+//            }
+
         }
     }
 

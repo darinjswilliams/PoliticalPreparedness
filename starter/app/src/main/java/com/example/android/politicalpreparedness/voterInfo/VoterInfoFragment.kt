@@ -52,6 +52,9 @@ class VoterInfoFragment : Fragment() {
 
         binding.viewModel = viewModel
 
+        //This will update the data binding layouts
+        binding.lifecycleOwner = this
+
         //TODO: Handle loading of URLs
         viewModel.url.observe(viewLifecycleOwner, {
             it?.let {
@@ -60,29 +63,11 @@ class VoterInfoFragment : Fragment() {
         })
 
 
+
         //TODO: Handle save button UI state
         //TODO: cont'd Handle save button clicks - created onClick Handler
         // The fragement voter info file determines the text to display and using
         // back button for navivation instead of actions
-//        viewModel.navigateToElection.observe(viewLifecycleOwner, Observer {
-//
-//            if (it == true) {
-//                binding.followedButton.text = getString(R.string.followed)
-//            } else {
-//                binding.followedButton.text = getString(R.string.unfollowed)
-//            }
-////            android:text="@{ viewModel.navigateToElection ? @string/unfollowed : @string/followed }"
-//
-////            if(it == true ){
-////            findNavController().navigate(
-////                VoterInfoFragmentDirections.actionVoterInfoFragmentToElectionsFragment()
-////            )
-////            viewModel.doneNavigation()
-////        }
-////
-//        })
-
-
 
 
         return binding.root

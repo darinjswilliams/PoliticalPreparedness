@@ -1,37 +1,29 @@
 package com.example.android.politicalpreparedness.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.example.android.politicalpreparedness.database.*
 import com.example.android.politicalpreparedness.network.*
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
-import com.example.android.politicalpreparedness.network.models.FollowedElectionInfo
 import com.example.android.politicalpreparedness.network.models.VoterInfo
+import com.example.android.politicalpreparedness.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 import timber.log.Timber
-import java.lang.Exception
 
 class CivicsRepository(private val database: ElectionDatabase) {
 
     lateinit var electionInfoForVoters: Election
     lateinit var informationForVoters: VoterInfo
-    var existingFollowedExisting: Boolean = false
+    var isFollowingElections = MutableLiveData<Boolean>()
 
     val elections: LiveData<List<Election>> = Transformations.map(
         database.electionDao.getElection()
     ) {
         it?.asElectionDomainModel()
     }
-
-
-    //    val voterInformation: LiveData<VoterInfo> = Transformations.map(
-//        database.electionDao.getVoterInformation()
-//    ){
-//        it?.asVoterInfoDomainModel()
-//    }
 
 
     suspend fun refreshInformation() {
@@ -86,30 +78,12 @@ class CivicsRepository(private val database: ElectionDatabase) {
                 val voterInformation =
                     database.electionDao.getVoterInformation()?.asVoterInfoDomainModel()
 
+                Timber.i("VOTER INFORMATION $voterInformation")
+
                 if (voterInformation != null) {
                     informationForVoters = voterInformation
+                    Timber.i("NOT NULL VOTER INFORMATION $informationForVoters")
                 }
-
-                //Check for Followed Election
-                val followedElection =
-                    voterInformation?.let { followed ->
-                        database.electionDao.getFollowedElection(followed.id)
-                            ?.asSingleFollowedElectionDomainModel()
-                    }
-
-                existingFollowedExisting = when (followedElection) {
-                    null -> true
-                    else -> false
-                }
-
-//                if (followedElection != null) {
-//                    Timber.i("EXISTING: STATE IS: STATE IS : True : ${followedElection.id}")
-//                    existingFollowedExisting = true
-//                } else {
-//                    Timber.i("DOES NOT EXIST: STATE IS FALSE: SET TO UNFOLLOWED: ${followedElection?.id}")
-//                    existingFollowedExisting = false
-//                }
-
 
             }
         } catch (e: Exception) {
@@ -159,52 +133,43 @@ class CivicsRepository(private val database: ElectionDatabase) {
 
     }
 
-    suspend fun trackFollowedElection(voterInfo: VoterInfo) {
+    suspend fun deleteFollowedElection(voterInfo: VoterInfo) {
+        withContext(Dispatchers.IO) {
+            database.electionDao.deletedFollowed(voterInfo.id)
+            Timber.i("DELETE Followed Election:  $voterInfo.id")
 
+            checkForFollowedElection(voterInfo.id)
+
+        }
+    }
+
+    suspend fun insertfollowElection(voterInfo: VoterInfo) {
         withContext(Dispatchers.IO) {
 
+            database.electionDao.insertFollowElection(voterInfo.asVoterInfoToFollowedElectionDatabaseModal())
+            Timber.i("INSERTING Followed Election:  $voterInfo.id")
 
-            val voterInformation =
-                database.electionDao.getVoterInformation()?.asVoterInfoDomainModel()
+            checkForFollowedElection(voterInfo.id)
 
-            val followedElection =
-                voterInformation?.let { followed ->
-                    database.electionDao.getFollowedElection(followed.id)
-                        ?.asSingleFollowedElectionDomainModel()
-                }
+        }
+    }
 
+    suspend fun checkForFollowedElection(id: Int): Result<FollowedElectionEntity> = withContext(Dispatchers.IO) {
 
-            existingFollowedExisting = when (followedElection) {
-                null -> {
-                    Timber.i("DOES NOT EXIST: INSERTING Followed Election:  $voterInfo.id")
-                    database.electionDao.insertFollowElection(voterInfo.asVoterInfoToFollowedElectionDatabaseModal())
-                    true
-                }
-                else -> {
-                    Timber.i("EXISTING: DELETE STATE IS : True : ${followedElection.id}")
-                    database.electionDao.deletedFollowed(voterInfo.id)
-                    false
-                }
+        return@withContext try {
+            val result = database.electionDao.getFollowedElection(id)
+            if(result != null){
+                Timber.i("CheckForFollowedElection Results: True: ${result.id}")
+                return@withContext Result.Success(result)
+            } else {
+                Timber.i("CheckForFollowedElection Results: False: ${result?.id}")
+                return@withContext Result.Error("Election Information Not Found!")
             }
 
+        } catch (e: Exception) {
+            return@withContext Result.Error(e.localizedMessage)
         }
-    }
 
-    suspend fun deleteFollowedElection(id: Int) {
-        withContext(Dispatchers.IO) {
-            database.electionDao.deletedFollowed(id)
-            Timber.i("INSERTING Followed Election:  $id")
-
-            existingFollowedExisting = false
-        }
-    }
-
-
-    suspend fun checkForFollowedElection(id: Int) {
-        withContext(Dispatchers.IO) {
-            database.electionDao.getFollowedElection(id)
-            Timber.i("Check Followed Election:  $id")
-        }
     }
 
 }

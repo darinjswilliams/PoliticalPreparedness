@@ -64,6 +64,7 @@ override fun onCreateView(
             this.findNavController().navigate(
                 ElectionsFragmentDirections
                     .actionElectionsFragmentToVoterInfoFragment(it.id, it.division!!))
+            viewModel.displayElectionCompleted()
         }
     })
 
