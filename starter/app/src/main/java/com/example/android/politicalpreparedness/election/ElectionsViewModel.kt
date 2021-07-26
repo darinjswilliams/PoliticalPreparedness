@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.example.android.politicalpreparedness.database.ElectionDatabase.Companion.getInstance
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.network.models.FollowedElectionInfo
 import com.example.android.politicalpreparedness.repository.CivicsRepository
 import com.example.android.politicalpreparedness.utils.ParseDate.getCurrentDateTime
 import kotlinx.coroutines.launch
@@ -40,6 +41,7 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
     private val database = getInstance(application)
     private val electionRepository = CivicsRepository(database)
     val electionList  = electionRepository.elections
+    val followElectionList = electionRepository.followedElectionList
 
     //init is called immediately when this ViewModel is created
     init {
@@ -61,6 +63,14 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
         Timber.i("Election ID: ${election.id}")
         Timber.i("Election State & Country: ${election.division!!.state}, ${election.division!!.country}")
         _navigateToElectionsProperty.value = election
+    }
+
+    fun displayFollowedElection(followedElectionInfo: Election){
+        Timber.i("FollowedElection ID: ${followedElectionInfo.id}")
+        Timber.i("FollowedElection state: ${followedElectionInfo.division!!.state}")
+        Timber.i("FollowedElection county: ${followedElectionInfo.division!!.country}")
+
+        _navigateToElectionsProperty.value = followedElectionInfo
     }
 
     //prevent unwanted naivation

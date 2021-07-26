@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.election.adapter.ElectionListener
+import com.example.android.politicalpreparedness.election.adapter.FollowElectionListAdapter
+import com.example.android.politicalpreparedness.election.adapter.FollowElectionListener
 import com.example.android.politicalpreparedness.voterInfo.VoterInfoFragment
 import com.example.android.politicalpreparedness.voterInfo.VoterInfoViewModel
 import timber.log.Timber
@@ -56,6 +58,10 @@ override fun onCreateView(
     //TODO: Populate recycler adapters
     binding.upcomingElectionRecycler.adapter = ElectionListAdapter(ElectionListener{
         viewModel.displayElections(it)
+    })
+
+    binding.savedElectionsRecycler.adapter = FollowElectionListAdapter(FollowElectionListener {
+        viewModel.displayFollowedElection(it)
     })
 
     viewModel.navigateToElectionsProperty.observe(viewLifecycleOwner, Observer {

@@ -1,5 +1,7 @@
 package com.example.android.politicalpreparedness.repository
 
+import android.view.animation.Transformation
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -7,6 +9,7 @@ import com.example.android.politicalpreparedness.database.*
 import com.example.android.politicalpreparedness.network.*
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.network.models.FollowedElectionInfo
 import com.example.android.politicalpreparedness.network.models.VoterInfo
 import com.example.android.politicalpreparedness.utils.Result
 import kotlinx.coroutines.Dispatchers
@@ -17,9 +20,16 @@ class CivicsRepository(private val database: ElectionDatabase) {
 
     lateinit var electionInfoForVoters: Election
     lateinit var informationForVoters: VoterInfo
+//    lateinit var followedElectionList: LiveData<List<FollowedElectionInfo>>
 
     val elections: LiveData<List<Election>> = Transformations.map(
         database.electionDao.getElection()
+    ) {
+        it?.asElectionDomainModel()
+    }
+
+    val followedElectionList: LiveData<List<Election>> = Transformations.map(
+        database.electionDao.getAllFollowedElection()
     ) {
         it?.asElectionDomainModel()
     }
@@ -28,6 +38,7 @@ class CivicsRepository(private val database: ElectionDatabase) {
     suspend fun refreshInformation() {
         withContext(Dispatchers.IO) {
             refreshElections()
+            getFollowedElections()
         }
     }
 
@@ -68,7 +79,7 @@ class CivicsRepository(private val database: ElectionDatabase) {
             database.electionDao.deleteVoterInformation()
 
             //insert minimum voter information into database
-            voterInfoList?.asVoterInfoDatabaseModel()?.let {
+            voterInfoList?.asVoterInfoDatabaseModel()?.let { it ->
                 database.electionDao.insertVoterInfo(
                     *it.toTypedArray()
                 )
@@ -168,6 +179,22 @@ class CivicsRepository(private val database: ElectionDatabase) {
         } catch (e: Exception) {
             return@withContext Result.Error(e.localizedMessage)
         }
+
+    }
+
+    private fun getFollowedElections(){
+
+            val followedElections: LiveData<List<FollowedElectionInfo>> = Transformations.map(
+                database.electionDao.getFollowedElections()
+            ) {
+                it?.asFollowedElectionDomainModal()
+            }
+
+            Timber.i("Followed Election GetFollowedElections Size: ${followedElections.value?.size}")
+            Timber.i("Followed Election GetFollowedElections: ${followedElections.value}")
+
+
+
 
     }
 

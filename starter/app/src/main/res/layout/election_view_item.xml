@@ -9,7 +9,7 @@
             type="com.example.android.politicalpreparedness.network.models.Election" />
 
         <variable
-            name="clickListner"
+            name="clickListener"
             type="com.example.android.politicalpreparedness.election.adapter.ElectionListener" />
     </data>
 
