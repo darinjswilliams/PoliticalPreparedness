@@ -1,10 +1,27 @@
 package com.example.android.politicalpreparedness.representative
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
+import com.example.android.politicalpreparedness.network.CivicsApi
+import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.representative.model.Representative
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
-class RepresentativeViewModel: ViewModel() {
+class RepresentativeViewModel(application: Application) : AndroidViewModel(application) {
 
     //TODO: Establish live data for representatives and address
+
+    //Internal Encapsulation
+    private  val _representatives = MutableLiveData<List<Representative>>()
+    private val _address = MutableLiveData<Address>()
+
+    //External
+    val representatives: LiveData<List<Representative>>
+        get() = _representatives
+
+    val address: LiveData<Address>
+        get() = _address
 
     //TODO: Create function to fetch representatives from API from a provided address
 
@@ -20,7 +37,32 @@ class RepresentativeViewModel: ViewModel() {
      */
 
     //TODO: Create function get address from geo location
+    fun getRepresentatives(address: String){
+        viewModelScope.launch {
+            val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(address)
+
+            //Stream data from officials
+            _representatives.value = offices.flatMap { office ->
+                office.getRepresentatives(officials)
+            }
+            Timber.i("Representatives: ${representatives.value}")
+        }
+    }
 
     //TODO: Create function to get address from individual fields
+    fun getAddressFromGeoLocation(address: Address){
+        Timber.i("Address: $address")
+        _address.value = address
+    }
 
+}
+
+class RepresentativeViewModelFactory(private val app: Application) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(RepresentativeViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return RepresentativeViewModel(app) as T
+        }
+        throw IllegalArgumentException("Unable to construct viewModel")
+    }
 }

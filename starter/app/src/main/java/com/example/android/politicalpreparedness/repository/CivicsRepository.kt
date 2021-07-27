@@ -18,9 +18,7 @@ import timber.log.Timber
 
 class CivicsRepository(private val database: ElectionDatabase) {
 
-    lateinit var electionInfoForVoters: Election
     lateinit var informationForVoters: VoterInfo
-//    lateinit var followedElectionList: LiveData<List<FollowedElectionInfo>>
 
     val elections: LiveData<List<Election>> = Transformations.map(
         database.electionDao.getElection()
@@ -38,25 +36,22 @@ class CivicsRepository(private val database: ElectionDatabase) {
     suspend fun refreshInformation() {
         withContext(Dispatchers.IO) {
             refreshElections()
-            getFollowedElections()
         }
     }
 
     suspend fun getVoterInformation(electionId: Int, division: Division) {
         withContext(Dispatchers.IO) {
             refreshVoterInformation(electionId, division)
-            getVoterElectionInfo(electionId)
         }
     }
 
     private suspend fun refreshVoterInformation(electionId: Int, division: Division) {
         Timber.i("CivicsRespository: VoterInformation")
 
-        //format the state and country
         try {
             val stateCounty = "${division.country},${division.state}"
-            Timber.i("State and Country Information: $stateCounty ElectionId: $electionId")
 
+            //TODO check to if the network is up it down, than call database
             val voterInfoResult =
                 CivicsApi.retrofitService.getVoterInfo(stateCounty, electionId.toLong())
 
@@ -65,7 +60,6 @@ class CivicsRepository(private val database: ElectionDatabase) {
 
 
             //Insert data into local database for offline cache
-            Timber.i("Voter Information Results ${voterInfoResult.state}")
             val voterInfoList = voterInfoResult.state?.map {
                 NetworkVoterInfo(
                     electionId,
@@ -84,15 +78,11 @@ class CivicsRepository(private val database: ElectionDatabase) {
                     *it.toTypedArray()
                 )
 
-
                 val voterInformation =
                     database.electionDao.getVoterInformation()?.asVoterInfoDomainModel()
 
-                Timber.i("VOTER INFORMATION $voterInformation")
-
                 if (voterInformation != null) {
                     informationForVoters = voterInformation
-                    Timber.i("NOT NULL VOTER INFORMATION $informationForVoters")
                 }
 
             }
@@ -129,25 +119,10 @@ class CivicsRepository(private val database: ElectionDatabase) {
 
     }
 
-    private suspend fun getVoterElectionInfo(electionId: Int) {
-        Timber.i("ElectionId: $electionId")
-
-        val electionInfo =
-            database.electionDao.getElectionById(electionId)?.asSingleElectionDomainModel()
-
-        Timber.i("Election Values ${electionInfo?.name}")
-
-        if (electionInfo != null) {
-            electionInfoForVoters = electionInfo
-        }
-
-    }
 
     suspend fun deleteFollowedElection(voterInfo: VoterInfo) {
         withContext(Dispatchers.IO) {
             database.electionDao.deletedFollowed(voterInfo.id)
-            Timber.i("DELETE Followed Election:  $voterInfo.id")
-
             checkForFollowedElection(voterInfo.id)
 
         }
@@ -157,8 +132,6 @@ class CivicsRepository(private val database: ElectionDatabase) {
         withContext(Dispatchers.IO) {
 
             database.electionDao.insertFollowElection(voterInfo.asVoterInfoToFollowedElectionDatabaseModal())
-            Timber.i("INSERTING Followed Election:  $voterInfo.id")
-
             checkForFollowedElection(voterInfo.id)
 
         }
@@ -179,22 +152,6 @@ class CivicsRepository(private val database: ElectionDatabase) {
         } catch (e: Exception) {
             return@withContext Result.Error(e.localizedMessage)
         }
-
-    }
-
-    private fun getFollowedElections(){
-
-            val followedElections: LiveData<List<FollowedElectionInfo>> = Transformations.map(
-                database.electionDao.getFollowedElections()
-            ) {
-                it?.asFollowedElectionDomainModal()
-            }
-
-            Timber.i("Followed Election GetFollowedElections Size: ${followedElections.value?.size}")
-            Timber.i("Followed Election GetFollowedElections: ${followedElections.value}")
-
-
-
 
     }
 

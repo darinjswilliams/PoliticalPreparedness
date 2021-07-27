@@ -57,14 +57,6 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
-        //This has bee
-        viewModel.isfollowingElection.observe(viewLifecycleOwner, {
-            if(it == true){
-                binding.followedButton.text = getString(R.string.unfollowed)
-            } else {
-                binding.followedButton.text = getString(R.string.followed)
-            }
-        })
 
         //TODO: Handle save button UI state
         //TODO: cont'd Handle save button clicks - created onClick Handler

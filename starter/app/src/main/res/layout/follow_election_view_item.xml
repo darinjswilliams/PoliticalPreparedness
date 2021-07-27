@@ -7,6 +7,9 @@
             name="followElectionProperty"
             type="com.example.android.politicalpreparedness.network.models.Election" />
 
+        <variable
+            name="clickListener"
+            type="com.example.android.politicalpreparedness.election.adapter.FollowElectionListener" />
     </data>
 
 

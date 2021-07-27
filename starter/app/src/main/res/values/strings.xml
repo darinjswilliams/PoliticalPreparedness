@@ -16,6 +16,7 @@
     <string name="ballot_information">Ballot Information</string>
     <string name="followed">Follow Election</string>
     <string name="unfollowed">UnFollow Election</string>
+    <string name="access">You can only access the viewModel after onViewCreated</string>
 
 
     <!-- TODO: Add necessary string values -->
