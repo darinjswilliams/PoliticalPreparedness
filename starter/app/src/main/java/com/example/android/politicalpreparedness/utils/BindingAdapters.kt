@@ -6,6 +6,8 @@ import com.example.android.politicalpreparedness.election.adapter.ElectionListAd
 import com.example.android.politicalpreparedness.election.adapter.FollowElectionListAdapter
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.FollowedElectionInfo
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
+import com.example.android.politicalpreparedness.representative.model.Representative
 import timber.log.Timber
 
 @BindingAdapter("listData")
@@ -23,3 +25,4 @@ fun bindFollowElectionRecyclerView(recyclerView: RecyclerView, data: List<Electi
     val adapter = recyclerView.adapter as FollowElectionListAdapter
     adapter.submitList(data)
 }
+

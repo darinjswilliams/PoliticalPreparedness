@@ -14,10 +14,13 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListener
 import com.google.android.gms.location.LocationServices
 import timber.log.Timber
 import java.util.Locale
@@ -26,7 +29,7 @@ class DetailFragment : Fragment() {
 
     companion object {
         //TODO: Add Constant for Location request
-        private val REQUEST_CODE_LOCATION_PERMISSION = 1
+        const val REQUEST_CODE_LOCATION_PERMISSION = 1
     }
 
     //TODO: Declare ViewModel
@@ -54,10 +57,27 @@ class DetailFragment : Fragment() {
         binding.viewModel = viewModel
 
         //TODO: Define and assign Representative adapter
-
         //TODO: Populate Representative adapter
+        val repAdpater = RepresentativeListAdapter()
+        binding.representativeRecycler.adapter = repAdpater
+
+         viewModel.representatives.observe(viewLifecycleOwner, Observer {
+             it?.let{
+                 repAdpater.submitList(it)
+                 hideKeyboard()
+             }
+         })
+
 
         //TODO: Establish button listeners for field and location search
+//        binding.buttonSearch.setOnClickListener{
+//            viewModel.getRepresentatives(viewModel.address.value.toString())
+//        }
+
+        binding.buttonLocation.setOnClickListener{
+            Timber.i("UseLocation Button Clicked")
+            getLocation()
+        }
 
         return binding.root
     }
@@ -130,6 +150,7 @@ class DetailFragment : Fragment() {
 
     private fun geoCodeLocation(location: Location): Address {
         val geocoder = Geocoder(context, Locale.getDefault())
+        Timber.i("GeocodeLocation: $location")
         return geocoder.getFromLocation(location.latitude, location.longitude, 1)
             .map { address ->
                 Address(

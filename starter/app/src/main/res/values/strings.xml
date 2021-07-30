@@ -17,6 +17,14 @@
     <string name="followed">Follow Election</string>
     <string name="unfollowed">UnFollow Election</string>
     <string name="access">You can only access the viewModel after onViewCreated</string>
+    <string name="representative_title">Representative Search</string>
+    <string name="address_line_one">Address Line 1</string>
+    <string name="address_line_two">Address Line 2</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="zip">Zip</string>
+    <string name="use_my_location">USE MY LOCATION</string>
+    <string name="my_representative">My Representatives</string>
 
 
     <!-- TODO: Add necessary string values -->

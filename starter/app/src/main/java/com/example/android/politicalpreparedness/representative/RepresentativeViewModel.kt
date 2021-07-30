@@ -39,6 +39,7 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
     //TODO: Create function get address from geo location
     fun getRepresentatives(address: String){
         viewModelScope.launch {
+            Timber.i("GetRepresentatives: $address")
             val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(address)
 
             //Stream data from officials
@@ -46,6 +47,7 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
                 office.getRepresentatives(officials)
             }
             Timber.i("Representatives: ${representatives.value}")
+
         }
     }
 
