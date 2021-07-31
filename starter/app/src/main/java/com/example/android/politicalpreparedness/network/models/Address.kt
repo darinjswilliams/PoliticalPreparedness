@@ -9,7 +9,7 @@ data class Address (
         var line1: String,
         var line2: String? = null,
         var city: String,
-        val state: String,
+        var state: String,
         var zip: String
 ) : Parcelable {
     fun toFormattedString(): String {
