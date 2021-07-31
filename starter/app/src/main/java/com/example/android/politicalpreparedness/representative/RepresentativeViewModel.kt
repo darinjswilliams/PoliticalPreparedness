@@ -1,6 +1,7 @@
 package com.example.android.politicalpreparedness.representative
 
 import android.app.Application
+import androidx.databinding.InverseMethod
 import androidx.lifecycle.*
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Address
@@ -14,7 +15,7 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
 
     //Internal Encapsulation
     private  val _representatives = MutableLiveData<List<Representative>>()
-    private val _address = MutableLiveData<Address>()
+    private var _address = MutableLiveData<Address>()
 
     //External
     val representatives: LiveData<List<Representative>>

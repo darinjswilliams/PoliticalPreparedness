@@ -1,7 +1,6 @@
 package com.example.android.politicalpreparedness.representative
 
 
-import android.Manifest
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,7 +8,9 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -20,10 +21,9 @@ import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
-import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListener
 import com.google.android.gms.location.LocationServices
 import timber.log.Timber
-import java.util.Locale
+import java.util.*
 
 class DetailFragment : Fragment() {
 
@@ -52,9 +52,10 @@ class DetailFragment : Fragment() {
         //TODO: Establish bindings
         val binding = FragmentRepresentativeBinding.inflate(inflater)
 
+        binding.viewModel = viewModel
+
         binding.lifecycleOwner = this
 
-        binding.viewModel = viewModel
 
         //TODO: Define and assign Representative adapter
         //TODO: Populate Representative adapter
@@ -165,6 +166,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun hideKeyboard() {
+        Timber.i("Hide Keyboard")
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
