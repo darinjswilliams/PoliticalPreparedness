@@ -36,9 +36,13 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
     Note: _representatives in the above code represents the established mutable live data housing representatives
 
      */
+    fun searchForRepresentatives(){
+        Timber.i("SearchRepresentatives")
+        getRepresentatives()
+    }
 
     //TODO: Create function get address from geo location
-    fun getRepresentatives(){
+    private fun getRepresentatives(){
         viewModelScope.launch {
             try {
                 Timber.i("GetRepresentatives:" )

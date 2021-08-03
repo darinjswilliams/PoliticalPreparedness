@@ -68,6 +68,7 @@ class DetailFragment : Fragment() {
         viewModel.representatives.observe(viewLifecycleOwner, Observer {
             it?.let {
                 repAdpater.submitList(it)
+                hideKeyboard()
             }
         })
 
@@ -127,15 +128,19 @@ class DetailFragment : Fragment() {
         super.onViewStateRestored(savedInstanceState)
 
         //POPULATE ADDRESS FROM SAVED INSTANCE STATE, USE EMPTY FILLER VALUE FOR STATE
-        val address = Address(
-            savedInstanceState!!.getString(Constants.addressline1)!!,
-            savedInstanceState!!.getString(Constants.addressline2),
-            savedInstanceState!!.getString(Constants.city)!!,
-            Constants.FillerValue,
-            savedInstanceState!!.getString(Constants.zip)!!,
-        )
+        try {
+            val address = Address(
+                savedInstanceState?.getString(Constants.addressline1)!!,
+                savedInstanceState?.getString(Constants.addressline2),
+                savedInstanceState?.getString(Constants.city)!!,
+                Constants.FillerValue,
+                savedInstanceState?.getString(Constants.zip)!!,
+            )
 
-        viewModel._address.value = address
+            viewModel._address.value = address
+        } catch (e: Exception) {
+            Timber.i("Address is null ${e.localizedMessage}")
+        }
     }
 
     private fun checkLocationPermissions(): Boolean {
@@ -172,7 +177,7 @@ class DetailFragment : Fragment() {
                 LocationServices.getFusedLocationProviderClient(requireContext())
                     .lastLocation.addOnSuccessListener { geolocation ->
                         viewModel.getAddressFromGeoLocation(geoCodeLocation(geolocation))
-                        viewModel.getRepresentatives()
+                        viewModel.searchForRepresentatives()
                     }
             }
             else -> {
