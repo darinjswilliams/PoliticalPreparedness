@@ -6,11 +6,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Address (
-        var line1: String,
+        var line1: String = "",
         var line2: String? = null,
-        var city: String,
-        var state: String,
-        var zip: String
+        var city: String = "",
+        var state: String = "",
+        var zip: String = ""
 ) : Parcelable {
     fun toFormattedString(): String {
         var output = line1.plus("\n")

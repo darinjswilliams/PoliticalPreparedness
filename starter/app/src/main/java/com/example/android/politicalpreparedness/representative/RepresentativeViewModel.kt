@@ -15,7 +15,7 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
 
     //Internal Encapsulation
     private  val _representatives = MutableLiveData<List<Representative>>()
-    private var _address = MutableLiveData<Address>()
+    var _address = MutableLiveData<Address>().apply { value = Address() }
 
     //External
     val representatives: LiveData<List<Representative>>
@@ -38,16 +38,21 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
      */
 
     //TODO: Create function get address from geo location
-    fun getRepresentatives(address: String){
+    fun getRepresentatives(){
         viewModelScope.launch {
-            Timber.i("GetRepresentatives: $address")
-            val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(address)
+            try {
+                Timber.i("GetRepresentatives:" )
 
-            //Stream data from officials
-            _representatives.value = offices.flatMap { office ->
-                office.getRepresentatives(officials)
+                val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(_address.value?.toFormattedString())
+
+                //Stream data from officials
+                _representatives.value = offices.flatMap { office ->
+                    office.getRepresentatives(officials)
+                }
+                Timber.i("Representatives: ${representatives.value}")
+            } catch (e: Exception) {
+                Timber.i("Exception ${e.localizedMessage}")
             }
-            Timber.i("Representatives: ${representatives.value}")
 
         }
     }

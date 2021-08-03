@@ -21,6 +21,7 @@ import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
+import com.example.android.politicalpreparedness.utils.Constants
 import com.google.android.gms.location.LocationServices
 import timber.log.Timber
 import java.util.*
@@ -43,6 +44,8 @@ class DetailFragment : Fragment() {
         ).get(RepresentativeViewModel::class.java)
     }
 
+    private lateinit var binding: FragmentRepresentativeBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,7 +53,7 @@ class DetailFragment : Fragment() {
     ): View? {
 
         //TODO: Establish bindings
-        val binding = FragmentRepresentativeBinding.inflate(inflater)
+        binding = FragmentRepresentativeBinding.inflate(inflater)
 
         binding.viewModel = viewModel
 
@@ -62,21 +65,18 @@ class DetailFragment : Fragment() {
         val repAdpater = RepresentativeListAdapter()
         binding.representativeRecycler.adapter = repAdpater
 
-         viewModel.representatives.observe(viewLifecycleOwner, Observer {
-             it?.let{
-                 repAdpater.submitList(it)
-                 hideKeyboard()
-             }
-         })
+        viewModel.representatives.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                repAdpater.submitList(it)
+            }
+        })
 
 
         //TODO: Establish button listeners for field and location search
-//        binding.buttonSearch.setOnClickListener{
-//            viewModel.getRepresentatives(viewModel.address.value.toString())
-//        }
 
-        binding.buttonLocation.setOnClickListener{
+        binding.buttonLocation.setOnClickListener {
             Timber.i("UseLocation Button Clicked")
+            hideKeyboard()
             getLocation()
         }
 
@@ -102,6 +102,42 @@ class DetailFragment : Fragment() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        when {
+            binding.addressLine1.text != null &&
+                    binding.addressLine2.text != null &&
+                    binding.city.text != null &&
+                    binding.zip.text != null -> {
+
+                outState.putString(Constants.addressline1, binding.addressLine1.text.toString())
+                outState.putString(Constants.addressline2, binding.addressLine2.text.toString())
+                outState.putString(Constants.city, binding.city.text.toString())
+                outState.putString(Constants.zip, binding.zip.text.toString())
+            }
+            else -> {
+                Timber.i("Address is Empty")
+            }
+
+        }
+
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+
+        //POPULATE ADDRESS FROM SAVED INSTANCE STATE, USE EMPTY FILLER VALUE FOR STATE
+        val address = Address(
+            savedInstanceState!!.getString(Constants.addressline1)!!,
+            savedInstanceState!!.getString(Constants.addressline2),
+            savedInstanceState!!.getString(Constants.city)!!,
+            Constants.FillerValue,
+            savedInstanceState!!.getString(Constants.zip)!!,
+        )
+
+        viewModel._address.value = address
+    }
+
     private fun checkLocationPermissions(): Boolean {
         return if (isPermissionGranted()) {
             true
@@ -121,7 +157,7 @@ class DetailFragment : Fragment() {
         return activity?.let {
             ContextCompat.checkSelfPermission(
                 it,
-               ACCESS_FINE_LOCATION
+                ACCESS_FINE_LOCATION
             )
         } === PackageManager.PERMISSION_GRANTED
 
@@ -136,7 +172,7 @@ class DetailFragment : Fragment() {
                 LocationServices.getFusedLocationProviderClient(requireContext())
                     .lastLocation.addOnSuccessListener { geolocation ->
                         viewModel.getAddressFromGeoLocation(geoCodeLocation(geolocation))
-                        viewModel.getRepresentatives(viewModel.address.value.toString())
+                        viewModel.getRepresentatives()
                     }
             }
             else -> {

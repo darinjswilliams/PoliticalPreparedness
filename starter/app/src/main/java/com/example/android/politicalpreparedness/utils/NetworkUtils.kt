@@ -1,5 +1,9 @@
 package com.example.android.politicalpreparedness.utils
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
+import androidx.core.content.ContextCompat.getSystemService
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,5 +34,6 @@ object ParseDate {
         return Calendar.getInstance().time
     }
 }
+
 
 
