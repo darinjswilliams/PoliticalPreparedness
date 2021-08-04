@@ -20,10 +20,18 @@
     <!-- TODO: Add motion scene to hide form on vertical scroll. -->
 
     <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motion_header_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutDescription="@xml/fragment_representative_scene">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/form_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
         <!-- TODO: Add visual styling and content -->
 
         <!-- TODO: Add data binding value -->
@@ -32,6 +40,7 @@
             android:id="@+id/search_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextAppearance.Title"
             android:text="@string/representative_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -70,7 +79,7 @@
         <!-- TODO: Add visual styling and content -->
         <EditText
             android:id="@+id/city"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zerodp"
             android:layout_height="wrap_content"
             android:autofillHints="@string/city"
             android:hint="@string/city"
@@ -82,8 +91,8 @@
 
         <Spinner
             android:id="@+id/state"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/zerodp"
+            android:layout_height="@dimen/zerodp"
             android:entries="@array/states"
             android:inputType="textPostalAddress"
             app:layout_constraintBottom_toBottomOf="@id/city"
@@ -96,12 +105,12 @@
         <!-- TODO: Add visual styling and content -->
         <EditText
             android:id="@+id/zip"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zerodp"
             android:layout_height="wrap_content"
             android:autofillHints="@string/zip"
             android:hint="@string/zip"
             android:inputType="number"
-            android:maxLength="5"
+            android:maxLength="@integer/max_length"
             android:text="@={viewModel.address.zip}"
             android:textColor="@color/gray50"
             android:textStyle="bold"
@@ -114,6 +123,7 @@
             android:id="@+id/button_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/TextAppearance.App.Button"
             android:onClick="@{() -> viewModel.searchForRepresentatives()}"
             android:text="@string/find_my_representatives"
             app:layout_constraintTop_toBottomOf="@id/zip" />
@@ -121,6 +131,7 @@
         <!-- TODO: Add visual styling and content -->
         <Button
             android:id="@+id/button_location"
+            style="@style/TextAppearance.App.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/use_my_location"
@@ -128,38 +139,44 @@
 
         <!-- TODO: Add visual styling and content -->
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <TextView
             android:id="@+id/representative_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextAppearance.Title"
             android:text="@string/my_representative"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_location" />
-
-        <TextView
-            android:id="@+id/list_placeholder"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/representative_title"
-            motion:visibilityMode="ignore" />
+            app:layout_constraintTop_toBottomOf="@id/form_id" />
 
         <!-- TODO: Add Representatives RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/representative_recycler"
             android:layout_width="match_parent"
-            android:layout_height="364dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="4dp"
+            android:layout_height="@dimen/zerodp"
+            android:layout_marginTop="@dimen/spacing_ex_large"
+            android:layout_marginEnd="@dimen/spacing_small"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/list_placeholder"
+            app:layout_constraintTop_toBottomOf="@id/representative_title"
             tools:listitem="@layout/follow_election_view_item" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_begin="@dimen/spacing_medium"
+            android:orientation="vertical"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/end_guideline"
+            app:layout_constraintGuide_end="@dimen/spacing_medium"
+            android:orientation="vertical"/>
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

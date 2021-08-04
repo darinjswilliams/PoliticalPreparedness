@@ -29,11 +29,11 @@ import java.util.*
 class DetailFragment : Fragment() {
 
     companion object {
-        //TODO: Add Constant for Location request
+        //Add Constant for Location request
         const val REQUEST_CODE_LOCATION_PERMISSION = 1
     }
 
-    //TODO: Declare ViewModel
+    //Declare ViewModel
     private val viewModel: RepresentativeViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             getString(R.string.access)
@@ -52,7 +52,7 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        //TODO: Establish bindings
+        //Establish bindings
         binding = FragmentRepresentativeBinding.inflate(inflater)
 
         binding.viewModel = viewModel
@@ -60,8 +60,8 @@ class DetailFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-        //TODO: Define and assign Representative adapter
-        //TODO: Populate Representative adapter
+        //Define and assign Representative adapter
+        //Populate Representative adapter
         val repAdpater = RepresentativeListAdapter()
         binding.representativeRecycler.adapter = repAdpater
 
@@ -73,8 +73,7 @@ class DetailFragment : Fragment() {
         })
 
 
-        //TODO: Establish button listeners for field and location search
-
+        // Establish button listeners for field and location search
         binding.buttonLocation.setOnClickListener {
             Timber.i("UseLocation Button Clicked")
             hideKeyboard()
@@ -90,7 +89,7 @@ class DetailFragment : Fragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        //TODO: Handle location permission result to get location on permission granted
+        //Handle location permission result to get location on permission granted
         when (requestCode) {
             REQUEST_CODE_LOCATION_PERMISSION -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -157,7 +156,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun isPermissionGranted(): Boolean {
-        //TODO: Check if permission is already granted and return (true = granted, false = denied/other)
+        //Check if permission is already granted and return (true = granted, false = denied/other)
 
         return activity?.let {
             ContextCompat.checkSelfPermission(
@@ -170,8 +169,8 @@ class DetailFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun getLocation() {
-        //TODO: Get location from LocationServices
-        //TODO: The geoCodeLocation method is a helper function to change the lat/long location to a human readable street address
+        //Get location from LocationServices
+        //The geoCodeLocation method is a helper function to change the lat/long location to a human readable street address
         when (checkLocationPermissions()) {
             true -> {
                 LocationServices.getFusedLocationProviderClient(requireContext())
