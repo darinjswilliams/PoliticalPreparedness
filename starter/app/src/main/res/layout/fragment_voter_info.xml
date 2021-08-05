@@ -17,6 +17,7 @@
 
         <!-- TODO: Add title to toolbar -->
         <androidx.appcompat.widget.Toolbar
+            style="@style/TextAppearance.AppCompat.Election.Subtitle"
             android:id="@+id/election_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/voter_information_header"
+            style="@style/WWWLink.App.Button"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/election_date" />
@@ -97,6 +99,7 @@
 
         <Button
             android:id="@+id/followed_button"
+            style="@style/TextAppearance.App.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

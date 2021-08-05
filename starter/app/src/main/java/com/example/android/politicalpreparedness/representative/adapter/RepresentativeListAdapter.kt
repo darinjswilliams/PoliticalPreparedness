@@ -2,11 +2,13 @@ package com.example.android.politicalpreparedness.representative.adapter
 
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
+import android.graphics.ColorFilter
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.app.NotificationCompat.getColor
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -69,16 +71,11 @@ class RepresentativeViewHolder(val binding: RepresentativeViewItemBinding) :
         binding.representative = item
         binding.representativePhoto.setImageResource(R.drawable.ic_profile)
 
-        //TODO: Show social links ** Hint: Use provided helper methods
-        //TODO: Show www link ** Hint: Use provided helper methods
         item.official.channels?.let { showSocialLinks(it) }
         item.official.urls?.let { showWWWLinks(it)}
 
         binding.executePendingBindings()
     }
-
-
-
 
     private fun showSocialLinks(channels: List<Channel>) {
         val facebookUrl = getFacebookUrl(channels)

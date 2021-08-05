@@ -29,6 +29,7 @@
     <string name="facebookIcon">Facebook Icon</string>
     <string name="twitterPhoto">twitter Icon</string>
     <string name="wwwIcon">Internet Icon</string>
+    <string name="voterIncomplete">Can not follow Incomplete Election with missing data</string>
 
 
     <!-- TODO: Add necessary string values -->

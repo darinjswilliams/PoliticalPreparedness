@@ -7,11 +7,14 @@
     <dimen name="spacing_medium">8dp</dimen>
     <dimen name="spacing_large">12dp</dimen>
     <dimen name="spacing_ex_large">16dp</dimen>
+    <dimen name="spacing_super">20dp</dimen>
     <dimen name="zerodp">0dp</dimen>
     <dimen name="text20sp">20sp</dimen>
     <dimen name="text18sp">18sp</dimen>
     <dimen name="text16sp">16sp</dimen>
+    <dimen name="text14sp">14sp</dimen>
     <dimen name="spacing_between_image">40dp</dimen>
     <dimen name="max_length">5</dimen>
+    <dimen name="recycle_space">100dp</dimen>
 
 </resources>

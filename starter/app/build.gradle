@@ -49,8 +49,6 @@ dependencies {
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
-//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_kotlin_coroutines"
-//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${version_kotlin_serialization}"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$version_kotlin"
 
@@ -82,7 +80,6 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Glide
-    //TODO: Add Glide Implementation
     implementation "com.github.bumptech.glide:glide:$version_glide"
 
 
@@ -96,4 +93,7 @@ dependencies {
 
     // Timber
     implementation "com.jakewharton.timber:timber:$version_timber"
+
+    //Material
+    implementation "com.google.android.material:material:$version_material"
 }

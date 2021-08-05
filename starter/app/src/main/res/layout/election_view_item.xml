@@ -15,8 +15,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:cardBackgroundColor="@color/colorAccent">
+        android:layout_height="@dimen/recycle_space">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -24,10 +23,11 @@
 
         <TextView
             android:id="@+id/electionName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            style="@style/TextAppearance.AppCompat.Subtitle"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:text="@{electionProperty.name}"
             tools:text="@string/election_name"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,10 +35,10 @@
 
         <TextView
             android:id="@+id/electionDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_ex_large"
             android:text="@{electionProperty.electionDay.toString()}"
             tools:text="@string/election_date_and_time"
             app:layout_constraintStart_toStartOf="parent"

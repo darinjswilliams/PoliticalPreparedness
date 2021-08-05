@@ -1,10 +1,13 @@
 package com.example.android.politicalpreparedness.voterInfo
 
 import android.app.Application
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase.Companion.getInstance
 import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
@@ -13,6 +16,7 @@ import com.example.android.politicalpreparedness.network.models.VoterInfoRespons
 import com.example.android.politicalpreparedness.repository.CivicsRepository
 import com.example.android.politicalpreparedness.utils.Result
 import kotlinx.coroutines.launch
+import kotlinx.serialization.protobuf.ProtoBuf.Companion.context
 import timber.log.Timber
 
 class VoterInfoViewModel(
@@ -20,6 +24,8 @@ class VoterInfoViewModel(
     private val division: Division,
     private val application: Application
 ) : ViewModel() {
+
+
 
     //TODO: Add live data to hold voter info
     private val _voterInfo = MutableLiveData<VoterInfo>()
@@ -136,18 +142,23 @@ class VoterInfoViewModel(
             Timber.i("BEFORE IS FOLLOWED ${_isfollowingElection.value}")
 
 
-            _isfollowingElection.value =  when(
-                voterInfo.let {civicsRepository.checkForFollowedElection(voterInfo.value!!.id)}){
-                is Result.Success<*> -> {
-                    Timber.i("onFollowedElectionTracking: Result is True: ${voterInfo.value!!.id}")
-                    voterInfo.value?.let { civicsRepository.deleteFollowedElection(voterInfo.value!!) }
-                    false
+            try {
+                _isfollowingElection.value =  when(
+                    voterInfo.let {civicsRepository.checkForFollowedElection(voterInfo.value!!.id)}){
+                    is Result.Success<*> -> {
+                        Timber.i("onFollowedElectionTracking: Result is True: ${voterInfo.value!!.id}")
+                        voterInfo.value?.let { civicsRepository.deleteFollowedElection(voterInfo.value!!) }
+                        false
+                    }
+                    is Result.Error -> {
+                        Timber.i("onFollowedElectionTracking: Result is False: ${voterInfo.value!!.id}")
+                        voterInfo.value?.let { civicsRepository.insertfollowElection(voterInfo.value!!) }
+                        true
+                    }
                 }
-                is Result.Error -> {
-                    Timber.i("onFollowedElectionTracking: Result is False: ${voterInfo.value!!.id}")
-                    voterInfo.value?.let { civicsRepository.insertfollowElection(voterInfo.value!!) }
-                    true
-                }
+            } catch (e: Exception) {
+                Timber.i(("Incomplete voter information"))
+                Toast.makeText(application.applicationContext, R.string.voterIncomplete, Toast.LENGTH_LONG).show()
             }
 
             Timber.i("After IS FOLLOWED ${_isfollowingElection.value}")
