@@ -67,7 +67,7 @@ override fun onCreateView(
 
     viewModel.navigateToElectionsProperty.observe(viewLifecycleOwner, Observer {
         if(null != it){
-            Timber.i("Navigate to VoterInfo")
+           Timber.d("Navigate to VoterInfo")
             this.findNavController().navigate(
                 ElectionsFragmentDirections
                     .actionElectionsFragmentToVoterInfoFragment(it.id, it.division!!))

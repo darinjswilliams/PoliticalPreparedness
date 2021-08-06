@@ -42,7 +42,7 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
 
      */
     fun searchForRepresentatives() {
-        Timber.i("SearchRepresentatives")
+       Timber.d("SearchRepresentatives")
         getRepresentatives()
     }
 
@@ -50,7 +50,7 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
     private fun getRepresentatives() {
         viewModelScope.launch {
             try {
-                Timber.i("GetRepresentatives:")
+               Timber.d("GetRepresentatives:")
 
                 when (context.isNetworkAvailable()) {
                     true -> {
@@ -63,12 +63,12 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
                         _representatives.value = offices.flatMap { office ->
                             office.getRepresentatives(officials)
                         }
-                        Timber.i("Representatives: ${representatives.value}")
+                       Timber.d("Representatives: ${representatives.value}")
                     }
                     else -> Toast.makeText(context, R.string.no_network, Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
-                Timber.i("Exception ${e.localizedMessage}")
+               Timber.d("Exception ${e.localizedMessage}")
             }
 
         }
@@ -76,7 +76,7 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
 
     //TODO: Create function to get address from individual fields
     fun getAddressFromGeoLocation(address: Address) {
-        Timber.i("Address: $address")
+       Timber.d("Address: $address")
         _address.value = address
     }
 

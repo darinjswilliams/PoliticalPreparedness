@@ -80,10 +80,10 @@ class VoterInfoViewModel(
 
     init {
         viewModelScope.launch {
-            Timber.i("VoterInfoViewModel")
+           Timber.d("VoterInfoViewModel")
 
             try {
-                Timber.i(
+               Timber.d(
                     "VoterInfoViewModel: ElectionId: $electionId " +
                             "Division Country: ${division.country}  " +
                             "Division State ${division.state}"
@@ -93,31 +93,31 @@ class VoterInfoViewModel(
 
                 _voterInfo.value = civicsRepository.informationForVoters
 
-                Timber.i("Voter Information DB: ${_voterInfo.value?.name}  and ${_voterInfo.value?.ballotInfoUrl}")
-                Timber.i("Is following Election : $isfollowingElection")
+               Timber.d("Voter Information DB: ${_voterInfo.value?.name}  and ${_voterInfo.value?.ballotInfoUrl}")
+               Timber.d("Is following Election : $isfollowingElection")
 
                 //check followed elections
                 _isfollowingElection.value =  when(civicsRepository.checkForFollowedElection(electionId)){
                     is Result.Success<*> -> {
-                        Timber.i("Init: Result is True")
+                       Timber.d("Init: Result is True")
                         true
                     }
                     is Result.Error -> {
-                        Timber.i("Init: Result is False")
+                       Timber.d("Init: Result is False")
                         false
                     }
                 }
 
 
             } catch (e: Exception) {
-                Timber.i("Exception Calling Get Voter Information: ${e.localizedMessage}")
+               Timber.d("Exception Calling Get Voter Information: ${e.localizedMessage}")
             }
 
         }
     }
 
     fun navigateToWebSite(url: String) {
-        Timber.i("URL: $url")
+       Timber.d("URL: $url")
         _url.value = url
     }
 
@@ -137,31 +137,31 @@ class VoterInfoViewModel(
 
     fun onFollowedElectionTracking() {
         viewModelScope.launch {
-            Timber.i("OnFollowedElection: ")
+           Timber.d("OnFollowedElection: ")
 
-            Timber.i("BEFORE IS FOLLOWED ${_isfollowingElection.value}")
+           Timber.d("BEFORE IS FOLLOWED ${_isfollowingElection.value}")
 
 
             try {
                 _isfollowingElection.value =  when(
                     voterInfo.let {civicsRepository.checkForFollowedElection(voterInfo.value!!.id)}){
                     is Result.Success<*> -> {
-                        Timber.i("onFollowedElectionTracking: Result is True: ${voterInfo.value!!.id}")
+                       Timber.d("onFollowedElectionTracking: Result is True: ${voterInfo.value!!.id}")
                         voterInfo.value?.let { civicsRepository.deleteFollowedElection(voterInfo.value!!) }
                         false
                     }
                     is Result.Error -> {
-                        Timber.i("onFollowedElectionTracking: Result is False: ${voterInfo.value!!.id}")
+                       Timber.d("onFollowedElectionTracking: Result is False: ${voterInfo.value!!.id}")
                         voterInfo.value?.let { civicsRepository.insertfollowElection(voterInfo.value!!) }
                         true
                     }
                 }
             } catch (e: Exception) {
-                Timber.i(("Incomplete voter information"))
+               Timber.d(("Incomplete voter information"))
                 Toast.makeText(application.applicationContext, R.string.voterIncomplete, Toast.LENGTH_LONG).show()
             }
 
-            Timber.i("After IS FOLLOWED ${_isfollowingElection.value}")
+           Timber.d("After IS FOLLOWED ${_isfollowingElection.value}")
 
         }
     }

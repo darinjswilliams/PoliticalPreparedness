@@ -16,6 +16,6 @@ class RepresentativeRepository(private val database: ElectionDatabase) {
 
     private suspend fun searchForRepresentative(address: String) {
 
-        Timber.i("GET REPRESENTATIVE INFORMATION")
+       Timber.d("GET REPRESENTATIVE INFORMATION")
     }
 }

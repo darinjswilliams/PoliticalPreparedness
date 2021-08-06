@@ -48,7 +48,7 @@ fun Spinner.setNewValue(value: String?) {
 
 @BindingAdapter("representativeList")
 fun bindRepresentativeRecyclerView(recyclerView: RecyclerView, data: List<Representative?>) {
-    Timber.i("Here are the representatives size of data:" + data?.size)
+   Timber.d("Here are the representatives size of data:" + data?.size)
     val adapter = recyclerView.adapter as RepresentativeListAdapter
     adapter.submitList(data)
 }

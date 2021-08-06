@@ -12,16 +12,16 @@ import timber.log.Timber
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Election>?) {
-    Timber.i("bindRecyclerViewCalled: size of data" + data?.size)
-    Timber.i("bindRecyclerViewCalled: size of data %s ", data)
+   Timber.d("bindRecyclerViewCalled: size of data" + data?.size)
+   Timber.d("bindRecyclerViewCalled: size of data %s ", data)
     val adapter = recyclerView.adapter as ElectionListAdapter
     adapter.submitList(data)
 }
 
 @BindingAdapter("listFollowElectionData")
 fun bindFollowElectionRecyclerView(recyclerView: RecyclerView, data: List<Election>?){
-    Timber.i("followElectionbindRecyclerViewCalled: size of data" + data?.size)
-    Timber.i("followElectionbindRecyclerViewCalled: size of data %s ", data)
+   Timber.d("followElectionbindRecyclerViewCalled: size of data" + data?.size)
+   Timber.d("followElectionbindRecyclerViewCalled: size of data %s ", data)
     val adapter = recyclerView.adapter as FollowElectionListAdapter
     adapter.submitList(data)
 }

@@ -53,7 +53,7 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
         viewModelScope.launch {
 
             //call api to elections
-            Timber.i("Before Calling api")
+           Timber.d("Before Calling api")
             try {
                 when(context.isNetworkAvailable()){
                  true -> {
@@ -64,23 +64,23 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
                 }
 
             } catch (e: Exception) {
-                Timber.i(" Exception Calling RefreshElection%s", e.localizedMessage)
+               Timber.d(" Exception Calling RefreshElection%s", e.localizedMessage)
             }
-            Timber.i("After Calling api")
+           Timber.d("After Calling api")
             //get saved data from local storage
         }
     }
 
     fun displayElections(election: Election) {
-        Timber.i("Election ID: ${election.id}")
-        Timber.i("Election State & Country: ${election.division!!.state}, ${election.division!!.country}")
+       Timber.d("Election ID: ${election.id}")
+       Timber.d("Election State & Country: ${election.division!!.state}, ${election.division!!.country}")
         _navigateToElectionsProperty.value = election
     }
 
     fun displayFollowedElection(followedElectionInfo: Election){
-        Timber.i("FollowedElection ID: ${followedElectionInfo.id}")
-        Timber.i("FollowedElection state: ${followedElectionInfo.division!!.state}")
-        Timber.i("FollowedElection county: ${followedElectionInfo.division!!.country}")
+       Timber.d("FollowedElection ID: ${followedElectionInfo.id}")
+       Timber.d("FollowedElection state: ${followedElectionInfo.division!!.state}")
+       Timber.d("FollowedElection county: ${followedElectionInfo.division!!.country}")
 
         _navigateToElectionsProperty.value = followedElectionInfo
     }

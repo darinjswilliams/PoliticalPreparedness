@@ -33,8 +33,8 @@ class VoterInfoFragment : Fragment() {
         Hint: You will need to ensure proper data is provided from previous fragment.
          */
 
-        Timber.i("VoterId ${electionId}")
-        Timber.i("Division Info: ${divisionInfo.state} and Country: ${divisionInfo.country}")
+       Timber.d("VoterId ${electionId}")
+       Timber.d("Division Info: ${divisionInfo.state} and Country: ${divisionInfo.country}")
 
 
         val viewModelFactory = VoterInfoViewModelFactory(electionId, divisionInfo, application)

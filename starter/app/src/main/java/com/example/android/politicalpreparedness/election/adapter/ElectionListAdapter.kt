@@ -31,13 +31,13 @@ class ElectionListAdapter(private val clickListener: ElectionListener) :
     //TODO: Bind ViewHolder
     override fun onBindViewHolder(holder: ElectionViewHolder, position: Int) {
         val electionProperty = getItem(position)
-        Timber.i("Here is the position: $position")
+       Timber.d("Here is the position: $position")
 
         holder.itemView.setOnClickListener {
             clickListener.onClick(electionProperty)
-            Timber.i("ElectionId:.." + electionProperty.id)
-            Timber.i("Division : State: .. ${electionProperty.division!!.state}" )
-            Timber.i("Division : Country: .. ${electionProperty.division!!.country}" )
+           Timber.d("ElectionId:.." + electionProperty.id)
+           Timber.d("Division : State: .. ${electionProperty.division!!.state}" )
+           Timber.d("Division : Country: .. ${electionProperty.division!!.country}" )
         }
         holder.bind(electionProperty)
     }

@@ -47,7 +47,7 @@ class CivicsRepository(private val database: ElectionDatabase) {
     }
 
     private suspend fun refreshVoterInformation(electionId: Int, division: Division) {
-        Timber.i("CivicsRespository: VoterInformation")
+       Timber.d("CivicsRespository: VoterInformation")
 
         try {
             val stateCounty = "${division.country},${division.state}"
@@ -89,18 +89,18 @@ class CivicsRepository(private val database: ElectionDatabase) {
 
             }
         } catch (e: Exception) {
-            Timber.i("Exception Voter Information Results ${e.localizedMessage}")
+           Timber.d("Exception Voter Information Results ${e.localizedMessage}")
         }
     }
 
     private suspend fun refreshElections() {
-        Timber.i("CivicsRepository")
+       Timber.d("CivicsRepository")
 
 
         try {
 
             val electionResults = CivicsApi.retrofitService.getElections()
-            Timber.i("Elections Results:%s", electionResults)
+           Timber.d("Elections Results:%s", electionResults)
 
 
             val electionList = electionResults.elections.map {
@@ -117,7 +117,7 @@ class CivicsRepository(private val database: ElectionDatabase) {
             )
 
         } catch (e: Exception) {
-            Timber.i("Elections Results:.." + e.localizedMessage)
+           Timber.d("Elections Results:.." + e.localizedMessage)
         }
 
     }
@@ -145,10 +145,10 @@ class CivicsRepository(private val database: ElectionDatabase) {
         return@withContext try {
             val result = database.electionDao.getFollowedElection(id)
             if(result != null){
-                Timber.i("CheckForFollowedElection Results: True: ${result.id}")
+               Timber.d("CheckForFollowedElection Results: True: ${result.id}")
                 return@withContext Result.Success(result)
             } else {
-                Timber.i("CheckForFollowedElection Results: False: ${result?.id}")
+               Timber.d("CheckForFollowedElection Results: False: ${result?.id}")
                 return@withContext Result.Error("Election Information Not Found!")
             }
 

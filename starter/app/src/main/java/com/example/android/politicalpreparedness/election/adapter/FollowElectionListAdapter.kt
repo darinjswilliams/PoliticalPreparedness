@@ -42,11 +42,11 @@ class FollowElectionListAdapter(private val clickListener: FollowElectionListene
 
     override fun onBindViewHolder(holder: FollowedElectionViewHolder, position: Int) {
       val followedElection = getItem(position)
-        Timber.i("FollowElection Position $position")
+       Timber.d("FollowElection Position $position")
 
         holder.itemView.setOnClickListener{
             clickListener.onClick(followedElection)
-            Timber.i("FollowElectionId: ${followedElection.id}")
+           Timber.d("FollowElectionId: ${followedElection.id}")
         }
         holder.bind(followedElection)
     }

@@ -75,7 +75,7 @@ class DetailFragment : Fragment() {
 
         // Establish button listeners for field and location search
         binding.buttonLocation.setOnClickListener {
-            Timber.i("UseLocation Button Clicked")
+           Timber.d("UseLocation Button Clicked")
             hideKeyboard()
             getLocation()
         }
@@ -97,7 +97,7 @@ class DetailFragment : Fragment() {
                 }
             }
             else -> {
-                Timber.i("Permission not Granted Place in SnackBar or Show Rationale")
+               Timber.d("Permission not Granted Place in SnackBar or Show Rationale")
             }
         }
     }
@@ -116,7 +116,7 @@ class DetailFragment : Fragment() {
                 outState.putString(Constants.zip, binding.zip.text.toString())
             }
             else -> {
-                Timber.i("Address is Empty")
+               Timber.d("Address is Empty")
             }
 
         }
@@ -138,7 +138,7 @@ class DetailFragment : Fragment() {
 
             viewModel._address.value = address
         } catch (e: Exception) {
-            Timber.i("Address is null ${e.localizedMessage}")
+           Timber.d("Address is null ${e.localizedMessage}")
         }
     }
 
@@ -191,7 +191,7 @@ class DetailFragment : Fragment() {
 
     private fun geoCodeLocation(location: Location): Address {
         val geocoder = Geocoder(context, Locale.getDefault())
-        Timber.i("GeocodeLocation: $location")
+       Timber.d("GeocodeLocation: $location")
         return geocoder.getFromLocation(location.latitude, location.longitude, 1)
             .map { address ->
                 Address(
@@ -206,7 +206,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun hideKeyboard() {
-        Timber.i("Hide Keyboard")
+       Timber.d("Hide Keyboard")
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
