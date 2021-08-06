@@ -1,20 +1,23 @@
 package com.example.android.politicalpreparedness.representative
 
 import android.app.Application
+import android.widget.Toast
 import androidx.databinding.InverseMethod
 import androidx.lifecycle.*
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.model.Representative
+import com.example.android.politicalpreparedness.utils.isNetworkAvailable
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import com.example.android.politicalpreparedness.R
 
 class RepresentativeViewModel(application: Application) : AndroidViewModel(application) {
 
     //TODO: Establish live data for representatives and address
 
     //Internal Encapsulation
-    private  val _representatives = MutableLiveData<List<Representative>>()
+    private val _representatives = MutableLiveData<List<Representative>>()
     var _address = MutableLiveData<Address>().apply { value = Address() }
 
     //External
@@ -23,6 +26,8 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
 
     val address: LiveData<Address>
         get() = _address
+
+    val context = application
 
     //TODO: Create function to fetch representatives from API from a provided address
 
@@ -36,24 +41,32 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
     Note: _representatives in the above code represents the established mutable live data housing representatives
 
      */
-    fun searchForRepresentatives(){
+    fun searchForRepresentatives() {
         Timber.i("SearchRepresentatives")
         getRepresentatives()
     }
 
     //TODO: Create function get address from geo location
-    private fun getRepresentatives(){
+    private fun getRepresentatives() {
         viewModelScope.launch {
             try {
-                Timber.i("GetRepresentatives:" )
+                Timber.i("GetRepresentatives:")
 
-                val (offices, officials) = CivicsApi.retrofitService.getRepresentatives(_address.value?.toFormattedString())
+                when (context.isNetworkAvailable()) {
+                    true -> {
+                        Timber.d("Connection is Available ${context.isNetworkAvailable()}")
 
-                //Stream data from officials
-                _representatives.value = offices.flatMap { office ->
-                    office.getRepresentatives(officials)
+                        val (offices, officials)
+                                = CivicsApi.retrofitService.getRepresentatives(_address.value?.toFormattedString())
+
+                        //Stream data from officials
+                        _representatives.value = offices.flatMap { office ->
+                            office.getRepresentatives(officials)
+                        }
+                        Timber.i("Representatives: ${representatives.value}")
+                    }
+                    else -> Toast.makeText(context, R.string.no_network, Toast.LENGTH_LONG).show()
                 }
-                Timber.i("Representatives: ${representatives.value}")
             } catch (e: Exception) {
                 Timber.i("Exception ${e.localizedMessage}")
             }
@@ -62,7 +75,7 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
     }
 
     //TODO: Create function to get address from individual fields
-    fun getAddressFromGeoLocation(address: Address){
+    fun getAddressFromGeoLocation(address: Address) {
         Timber.i("Address: $address")
         _address.value = address
     }

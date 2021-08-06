@@ -13,6 +13,7 @@ import com.example.android.politicalpreparedness.network.models.FollowedElection
 import com.example.android.politicalpreparedness.network.models.VoterInfo
 import com.example.android.politicalpreparedness.utils.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -52,6 +53,7 @@ class CivicsRepository(private val database: ElectionDatabase) {
             val stateCounty = "${division.country},${division.state}"
 
             //TODO check to if the network is up it down, than call database
+
             val voterInfoResult =
                 CivicsApi.retrofitService.getVoterInfo(stateCounty, electionId.toLong())
 
@@ -96,6 +98,7 @@ class CivicsRepository(private val database: ElectionDatabase) {
 
 
         try {
+
             val electionResults = CivicsApi.retrofitService.getElections()
             Timber.i("Elections Results:%s", electionResults)
 

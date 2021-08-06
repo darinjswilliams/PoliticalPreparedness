@@ -91,7 +91,7 @@ dependencies {
     // Location
     implementation "com.google.android.gms:play-services-location:$version_play_services_location"
 
-    // Timber
+    // Timber`
     implementation "com.jakewharton.timber:timber:$version_timber"
 
     //Material

@@ -1,13 +1,16 @@
 package com.example.android.politicalpreparedness.election
 
 import android.app.Application
-import androidx.lifecycle.*
+import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase.Companion.getInstance
-import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
-import com.example.android.politicalpreparedness.network.models.FollowedElectionInfo
 import com.example.android.politicalpreparedness.repository.CivicsRepository
-import com.example.android.politicalpreparedness.utils.ParseDate.getCurrentDateTime
+import com.example.android.politicalpreparedness.utils.isNetworkAvailable
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -19,6 +22,8 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
 
     //TODO: Create live data val for saved elections
     private val _savedElections = MutableLiveData<Election>()
+
+    private val context = application
 
 
     //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
@@ -50,7 +55,14 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
             //call api to elections
             Timber.i("Before Calling api")
             try {
-                electionRepository.refreshInformation()
+                when(context.isNetworkAvailable()){
+                 true -> {
+                     Timber.d("Connection is Available ${context.isNetworkAvailable()}")
+                     electionRepository.refreshInformation()
+                 }
+                 else -> Toast.makeText(context, R.string.no_network, Toast.LENGTH_LONG).show()
+                }
+
             } catch (e: Exception) {
                 Timber.i(" Exception Calling RefreshElection%s", e.localizedMessage)
             }

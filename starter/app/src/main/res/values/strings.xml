@@ -30,6 +30,7 @@
     <string name="twitterPhoto">twitter Icon</string>
     <string name="wwwIcon">Internet Icon</string>
     <string name="voterIncomplete">Can not follow Incomplete Election with missing data</string>
+    <string name="no_network">No Internet Connection</string>
 
 
     <!-- TODO: Add necessary string values -->

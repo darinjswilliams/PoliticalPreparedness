@@ -57,7 +57,6 @@ class VoterInfoFragment : Fragment() {
             }
         })
 
-
         //TODO: Handle save button UI state
         //TODO: cont'd Handle save button clicks - created onClick Handler
         // The fragement voter info file determines the text to display and using
