@@ -60,7 +60,7 @@ class VoterInfoFragment : Fragment() {
         return binding.root
     }
 
-    //TODO: Create method to load URL intents
+    //Create method to load URL intents
     private fun loadURLs(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
