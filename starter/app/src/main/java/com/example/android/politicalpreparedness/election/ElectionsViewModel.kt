@@ -14,19 +14,19 @@ import com.example.android.politicalpreparedness.utils.isNetworkAvailable
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-//TODO: Construct ViewModel and provide election datasource
+//Construct ViewModel and provide election datasource
 class ElectionsViewModel(application: Application) : AndroidViewModel(application) {
 
-    //TODO: Create live data val for upcoming elections
+    //Create live data val for upcoming elections
     private val _elections = MutableLiveData<Election>()
 
-    //TODO: Create live data val for saved elections
+    //Create live data val for saved elections
     private val _savedElections = MutableLiveData<Election>()
 
     private val context = application
 
 
-    //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
+    //Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
 
     val elections: LiveData<Election>
         get() = _elections
@@ -35,7 +35,7 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
         get() = _savedElections
 
 
-    //TODO: Create functions to navigate to saved or upcoming election voter info
+    // Create functions to navigate to saved or upcoming election voter info
 
     private val _navigateToElectionsProperty = MutableLiveData<Election>()
 
@@ -67,7 +67,6 @@ class ElectionsViewModel(application: Application) : AndroidViewModel(applicatio
                Timber.d(" Exception Calling RefreshElection%s", e.localizedMessage)
             }
            Timber.d("After Calling api")
-            //get saved data from local storage
         }
     }
 

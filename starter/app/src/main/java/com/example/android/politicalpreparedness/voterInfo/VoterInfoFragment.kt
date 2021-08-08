@@ -20,7 +20,7 @@ class VoterInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        //TODO: Add binding values
+        //Add binding values
         val binding = FragmentVoterInfoBinding.inflate((inflater))
 
         val application = requireNotNull(activity).application
@@ -28,7 +28,7 @@ class VoterInfoFragment : Fragment() {
         val electionId = bundle.argElectionId
         val divisionInfo = bundle.argDivision
 
-        //TODO: Populate voter info -- hide views without provided data.
+        //Populate voter info -- hide views without provided data.
         /**
         Hint: You will need to ensure proper data is provided from previous fragment.
          */
@@ -50,18 +50,12 @@ class VoterInfoFragment : Fragment() {
         //This will update the data binding layouts
         binding.lifecycleOwner = this
 
-        //TODO: Handle loading of URLs
+        //Handle loading of URLs
         viewModel.url.observe(viewLifecycleOwner, {
             it?.let {
                 loadURLs(it)
             }
         })
-
-        //TODO: Handle save button UI state
-        //TODO: cont'd Handle save button clicks - created onClick Handler
-        // The fragement voter info file determines the text to display and using
-        // back button for navivation instead of actions
-
 
         return binding.root
     }

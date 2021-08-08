@@ -52,7 +52,7 @@ class CivicsRepository(private val database: ElectionDatabase) {
         try {
             val stateCounty = "${division.country},${division.state}"
 
-            //TODO check to if the network is up it down, than call database
+            //check to if the network is up it down, than call database
 
             val voterInfoResult =
                 CivicsApi.retrofitService.getVoterInfo(stateCounty, electionId.toLong())

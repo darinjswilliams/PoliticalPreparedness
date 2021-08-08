@@ -20,7 +20,7 @@ import timber.log.Timber
 
 class ElectionsFragment : Fragment() {
 
-    //TODO: Declare ViewModel
+    //Declare ViewModel
     /**
      * One way to delay creation of the viewModel until an appropriate lifecycle method is to use
      * lazy. This requires that viewModel not be referenced before onViewCreated(), which we

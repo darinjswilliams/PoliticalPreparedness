@@ -30,7 +30,7 @@
             android:layout_marginTop="@dimen/spacing_medium"
             android:text="@{electionProperty.name}"
             tools:text="@string/election_name"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -41,8 +41,22 @@
             android:layout_marginTop="@dimen/spacing_ex_large"
             android:text="@{electionProperty.electionDay.toString()}"
             tools:text="@string/election_date_and_time"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintTop_toBottomOf="@+id/electionName" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/spacing_medium"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/spacing_medium"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

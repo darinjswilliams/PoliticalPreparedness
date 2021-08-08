@@ -95,7 +95,7 @@
         <Button
             android:id="@+id/followed_button"
             style="@style/TextAppearance.App.Button"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zerodp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginEnd="@dimen/spacing_medium"

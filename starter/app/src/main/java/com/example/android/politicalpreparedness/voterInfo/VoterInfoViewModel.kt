@@ -27,12 +27,12 @@ class VoterInfoViewModel(
 
 
 
-    //TODO: Add live data to hold voter info
+    //Add live data to hold voter info
     private val _voterInfo = MutableLiveData<VoterInfo>()
     val voterInfo: LiveData<VoterInfo>
         get() = _voterInfo
 
-    //TODO: Add var and methods to populate voter info
+    //Add var and methods to populate voter info
     private val _voterInformationUrl = MutableLiveData<String>()
     val voterInformationUrl: LiveData<String>
         get() = _voterInformationUrl
@@ -47,7 +47,7 @@ class VoterInfoViewModel(
         get() = _ballotUrl
 
 
-    //TODO: Add var and methods to support loading URLs
+    //Add var and methods to support loading URLs
     private val _url = MutableLiveData<String>()
 
     val url: LiveData<String>
@@ -67,8 +67,8 @@ class VoterInfoViewModel(
         get() = _isfollowingElection
 
 
-    //TODO: Add var and methods to save and remove elections to local database
-    //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
+    //Add var and methods to save and remove elections to local database
+    //cont'd -- Populate initial state of save button to reflect proper action based on election saved status
 
     /**
      * Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.

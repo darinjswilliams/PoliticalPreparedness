@@ -3,11 +3,15 @@
     <dimen name="default_padding">8dp</dimen>
 
 
+    <dimen name="spacing_ex_small">2dp</dimen>
     <dimen name="spacing_small">4dp</dimen>
     <dimen name="spacing_medium">8dp</dimen>
     <dimen name="spacing_large">12dp</dimen>
     <dimen name="spacing_ex_large">16dp</dimen>
+    <dimen name="spacing_19dp">19dp</dimen>
     <dimen name="spacing_super">20dp</dimen>
+    <dimen name="thirty30dp">30dp</dimen>
+    <dimen name="thirty32dp">32dp</dimen>
     <dimen name="zerodp">0dp</dimen>
     <dimen name="text20sp">20sp</dimen>
     <dimen name="text18sp">18sp</dimen>
@@ -17,5 +21,8 @@
     <dimen name="max_length">5</dimen>
     <dimen name="recycle_space">100dp</dimen>
     <dimen name="horizontal_bias" type="integer" format="float">0.49</dimen>
+    <dimen name="card_dim">75dp</dimen>
+    <dimen name="recycle_height_election">250dp</dimen>
+    <dimen name="absolute_y_position">340dp</dimen>
 
 </resources>

@@ -14,16 +14,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context="com.example.android.politicalpreparedness.MainActivity">
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/upcoming_election_recycler"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="@dimen/recycle_height_election"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.38"
@@ -35,10 +33,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/saved_elections_recycler"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="8dp"
+            android:layout_height="@dimen/recycle_height_election"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,9 +45,9 @@
             android:id="@+id/upcoming_election"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -62,6 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/upcoming_elections"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
                 style="@style/TextAppearance.Title"
                 tools:text="Upcoming Elections" />
 
@@ -71,9 +67,9 @@
             android:id="@+id/saved_elections"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="23dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/upcoming_election_recycler">
@@ -85,9 +81,24 @@
                 android:layout_height="match_parent"
                 android:text="@string/saved_elections"
                 style="@style/TextAppearance.Title"
-                tools:layout_editor_absoluteX="20dp"
-                tools:layout_editor_absoluteY="340dp"
+                tools:layout_editor_absoluteX="@dimen/spacing_super"
+                tools:layout_editor_absoluteY="@dimen/absolute_y_position"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
                 tools:text="Saved Elections" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/spacing_medium"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/spacing_medium"/>
 
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

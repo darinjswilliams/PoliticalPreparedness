@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="representative"
             type="com.example.android.politicalpreparedness.representative.model.Representative" />
@@ -21,11 +23,11 @@
 
             <ImageView
                 android:id="@+id/representativePhoto"
-                android:contentDescription="@string/representativePhoto"
                 android:layout_width="95dp"
                 android:layout_height="80dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/thirty32dp"
+                android:contentDescription="@string/representativePhoto"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:profileImage="@{representative.official.photoUrl}"
@@ -35,8 +37,8 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/thirty32dp"
                 android:text="@{representative.office.name}"
                 app:layout_constraintStart_toEndOf="@+id/representativePhoto"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -44,9 +46,9 @@
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
-                android:layout_height="19dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="15dp"
+                android:layout_height="@dimen/spacing_19dp"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_ex_large"
                 android:text="@{representative.official.name}"
                 app:layout_constraintStart_toEndOf="@+id/representativePhoto"
                 app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -55,20 +57,18 @@
                 android:id="@+id/party"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_ex_large"
                 android:text="@{representative.official.party}"
                 app:layout_constraintStart_toEndOf="@+id/representativePhoto"
                 app:layout_constraintTop_toBottomOf="@+id/name" />
 
             <ImageView
                 android:id="@+id/wwwIcon"
+                android:layout_width="@dimen/thirty30dp"
+                android:layout_height="@dimen/thirty32dp"
+                style="@style/Social.Media.Icons"
                 android:contentDescription="@string/wwwIcon"
-                android:layout_width="30dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/facebookIcon"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -76,12 +76,10 @@
 
             <ImageView
                 android:id="@+id/facebookIcon"
+                android:layout_width="@dimen/thirty30dp"
+                android:layout_height="@dimen/thirty32dp"
+                style="@style/Social.Media.Icons"
                 android:contentDescription="@string/facebookIcon"
-                android:layout_width="30dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/twitterIcon"
                 app:layout_constraintStart_toEndOf="@+id/wwwIcon"
@@ -89,12 +87,10 @@
 
             <ImageView
                 android:id="@+id/twitterIcon"
+                android:layout_width="@dimen/thirty30dp"
+                android:layout_height="@dimen/thirty32dp"
+                style="@style/Social.Media.Icons"
                 android:contentDescription="@string/twitterPhoto"
-                android:layout_width="30dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/facebookIcon"
