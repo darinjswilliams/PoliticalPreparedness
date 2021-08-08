@@ -20,7 +20,7 @@ import timber.log.Timber
 fun fetchImage(view: ImageView, src: String?) {
     src?.let {
         val uri = src.toUri().buildUpon().scheme("https").build()
-        //TODO: Add Glide call to load image and circle crop - user ic_profile as a placeholder and for errors.
+        //Add Glide call to load image and circle crop - user ic_profile as a placeholder and for errors.
         Glide.with(view)
             .load(uri)
             .apply(
@@ -44,13 +44,6 @@ fun Spinner.setNewValue(value: String?) {
     if (position >= 0) {
         setSelection(position)
     }
-}
-
-@BindingAdapter("representativeList")
-fun bindRepresentativeRecyclerView(recyclerView: RecyclerView, data: List<Representative?>) {
-   Timber.d("Here are the representatives size of data:" + data?.size)
-    val adapter = recyclerView.adapter as RepresentativeListAdapter
-    adapter.submitList(data)
 }
 
 inline fun <reified T> toTypedAdapter(adapter: ArrayAdapter<*>): ArrayAdapter<T> {

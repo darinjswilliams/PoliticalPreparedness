@@ -8,46 +8,56 @@
         android:layout_height="match_parent"
         tools:context="com.example.android.politicalpreparedness.MainActivity">
 
-        <!-- TODO: Add image for home screen logo. -->
 
-        <!-- TODO: Add Button to navigate to upcoming elections. -->
-
-        <!-- TODO: Add Button to navigate to representatives. -->
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/zerodp"
             android:contentDescription="@string/election_image"
-            android:layout_marginTop="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/spacing_small"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintHorizontal_bias=".49"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ballot_logo" />
 
         <Button
             android:id="@+id/upcomingButton"
-            android:layout_width="305dp"
-            android:layout_height="63dp"
+            android:layout_width="@dimen/zerodp"
+            android:layout_height="wrap_content"
             style="@style/TextAppearance.App.Button"
             android:layout_marginTop="@dimen/spacing_between_image"
             android:contentDescription="@string/upcoming_elections_button"
             android:text="@string/upcoming_elections"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <Button
             android:id="@+id/representativeButton"
-            android:layout_width="305dp"
-            android:layout_height="62dp"
+            android:layout_width="@dimen/zerodp"
+            android:layout_height="wrap_content"
             style="@style/TextAppearance.App.Button"
             android:layout_marginTop="@dimen/spacing_medium"
             android:contentDescription="@string/find_my_representative_button"
             android:text="@string/find_my_representatives"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline1"
             app:layout_constraintTop_toBottomOf="@+id/upcomingButton" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/spacing_medium" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/spacing_medium" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -14,7 +14,7 @@ import com.example.android.politicalpreparedness.R
 
 class RepresentativeViewModel(application: Application) : AndroidViewModel(application) {
 
-    //TODO: Establish live data for representatives and address
+    //Establish live data for representatives and address
 
     //Internal Encapsulation
     private val _representatives = MutableLiveData<List<Representative>>()
@@ -29,7 +29,7 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
 
     val context = application
 
-    //TODO: Create function to fetch representatives from API from a provided address
+    //Create function to fetch representatives from API from a provided address
 
     /**
      *  The following code will prove helpful in constructing a representative from the API. This code combines the two nodes of the RepresentativeResponse into a single official :
@@ -46,7 +46,7 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
         getRepresentatives()
     }
 
-    //TODO: Create function get address from geo location
+    //Create function get address from geo location
     private fun getRepresentatives() {
         viewModelScope.launch {
             try {
@@ -74,7 +74,7 @@ class RepresentativeViewModel(application: Application) : AndroidViewModel(appli
         }
     }
 
-    //TODO: Create function to get address from individual fields
+    //Create function to get address from individual fields
     fun getAddressFromGeoLocation(address: Address) {
        Timber.d("Address: $address")
         _address.value = address

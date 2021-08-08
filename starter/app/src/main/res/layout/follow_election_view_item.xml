@@ -25,15 +25,16 @@
 
             <TextView
                 android:id="@+id/followElectionName"
+                style="@style/TextAppearance.AppCompat.Subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TextAppearance.AppCompat.Subtitle"
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:layout_marginTop="@dimen/spacing_medium"
                 android:text="@{followElectionProperty.name}"
-                tools:text="@string/election_name"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/election_name" />
 
             <TextView
                 android:id="@+id/followedElectionDate"
@@ -43,8 +44,23 @@
                 android:layout_marginTop="@dimen/spacing_medium"
                 android:text="@{followElectionProperty.electionDay.toString()}"
                 tools:text="@string/election_date_and_time"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline1"
+                app:layout_constraintEnd_toEndOf="@id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/followElectionName" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/spacing_medium"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/spacing_medium"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

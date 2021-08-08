@@ -7,7 +7,7 @@ class CivicsHttpClient: OkHttpClient() {
 
     companion object {
 
-        //TODO: Done Place your API Key Here
+
 
         fun getClient(): OkHttpClient {
             return Builder()

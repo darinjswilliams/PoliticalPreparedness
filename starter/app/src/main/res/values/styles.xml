@@ -11,7 +11,7 @@
         <item name="fontFamily">@font/roboto_black</item>
     </style>
 
-    <!-- TODO: Add necessary styles -->
+\
     <style name="TextAppearance.Title" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textSize">@dimen/text20sp</item>
         <item name="android:textColor">@color/black</item>
@@ -26,6 +26,11 @@
     <style name="TextAppearance.AppCompat.Election.Subtitle" parent="TextAppearance.Title">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text18sp</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Voting.Subtitle" parent="TextAppearance.Title">
+        <item name="android:textSize">@dimen/text16sp</item>
+        <item name="android:layout_marginTop">@dimen/spacing_super</item>
     </style>
 
     <style name="TextAppearance.App.Button" parent="TextAppearance.AppCompat.Widget.Button">

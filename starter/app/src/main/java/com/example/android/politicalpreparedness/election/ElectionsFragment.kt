@@ -43,20 +43,20 @@ override fun onCreateView(
     savedInstanceState: Bundle?
 ): View {
 
-    //TODO: Add ViewModel values and create ViewModel
+    //Add ViewModel values and create ViewModel
     val binding = FragmentElectionBinding.inflate(inflater)
 
-    //TODO: Add binding values
+    // Add binding values
     // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
     binding.lifecycleOwner = this
 
     // Giving the binding access to the OverviewViewModel
     binding.viewModel = viewModel
 
-    //TODO: Link elections to voter info
+    //Link elections to voter info
 
-    //TODO: Initiate recycler adapters
-    //TODO: Populate recycler adapters
+    //Initiate recycler adapters
+    //Populate recycler adapters
     binding.upcomingElectionRecycler.adapter = ElectionListAdapter(ElectionListener{
         viewModel.displayElections(it)
     })
@@ -79,6 +79,5 @@ override fun onCreateView(
     return binding.root
 }
 
-//TODO: Refresh adapters when fragment loads
 
 }

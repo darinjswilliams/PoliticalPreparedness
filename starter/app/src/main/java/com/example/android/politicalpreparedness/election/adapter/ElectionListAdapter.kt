@@ -12,7 +12,7 @@ import timber.log.Timber
 class ElectionListAdapter(private val clickListener: ElectionListener) :
     ListAdapter<Election, ElectionViewHolder>(ElectionDiffCallback) {
 
-    //TODO: Create ElectionDiffCallback
+    //Create ElectionDiffCallback
     companion object ElectionDiffCallback : DiffUtil.ItemCallback<Election>() {
         override fun areItemsTheSame(oldItem: Election, newItem: Election): Boolean {
             return newItem == oldItem
@@ -28,7 +28,7 @@ class ElectionListAdapter(private val clickListener: ElectionListener) :
         return ElectionViewHolder(ElectionViewItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    //TODO: Bind ViewHolder
+    //Bind ViewHolder
     override fun onBindViewHolder(holder: ElectionViewHolder, position: Int) {
         val electionProperty = getItem(position)
        Timber.d("Here is the position: $position")
@@ -51,12 +51,12 @@ class ElectionListAdapter(private val clickListener: ElectionListener) :
     }
 }
 
-//TODO: Create ElectionListener
+//Create ElectionListener
 class ElectionListener(val clickListener: (election: Election) -> Unit) {
     fun onClick(election: Election) = clickListener(election)
 }
 
-//TODO: Create ElectionViewHolder
+//Create ElectionViewHolder
 class ElectionViewHolder(private var binding: ElectionViewItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(election: Election) {
@@ -65,7 +65,7 @@ class ElectionViewHolder(private var binding: ElectionViewItemBinding) :
         binding.executePendingBindings()
     }
 
-    //TODO: Add companion object to inflate ViewHolder (from)
+    //Add companion object to inflate ViewHolder (from)
     //Create Layout View based on the parent View
     companion object{
         fun from(parent: ViewGroup): ElectionViewHolder {

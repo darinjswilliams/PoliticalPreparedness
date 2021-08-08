@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Political Preparedness</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="election_image">Election Image</string>
     <string name="upcoming_elections_button">Upcoming Elections Button</string>
@@ -31,8 +30,5 @@
     <string name="wwwIcon">Internet Icon</string>
     <string name="voterIncomplete">Can not follow Incomplete Election with missing data</string>
     <string name="no_network">No Internet Connection</string>
-
-
-    <!-- TODO: Add necessary string values -->
 
 </resources>

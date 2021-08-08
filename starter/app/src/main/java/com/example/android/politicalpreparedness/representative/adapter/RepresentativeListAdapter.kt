@@ -43,7 +43,7 @@ class RepresentativeListAdapter : ListAdapter<Representative, RepresentativeView
 class RepresentativeViewHolder(val binding: RepresentativeViewItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    //TODO: Create RepresentativeDiffCallback
+    //Create RepresentativeDiffCallback
     companion object RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
         override fun areItemsTheSame(oldItem: Representative, newItem: Representative): Boolean {
             return newItem == oldItem
@@ -53,7 +53,7 @@ class RepresentativeViewHolder(val binding: RepresentativeViewItemBinding) :
             return newItem.office == oldItem.office
         }
 
-        //TODO: Add companion object to inflate ViewHolder (from)
+        //Add companion object to inflate ViewHolder (from)
         fun from(parent: ViewGroup): RepresentativeViewHolder {
             return RepresentativeViewHolder(
                 RepresentativeViewItemBinding.inflate(
@@ -119,7 +119,6 @@ class RepresentativeViewHolder(val binding: RepresentativeViewItemBinding) :
 }
 
 
-//TODO: Create RepresentativeListener
 class RepresentativeListener(val clickListener: (representative: Representative) -> Unit) {
     fun onClick(representative: Representative) = clickListener(representative)
 }

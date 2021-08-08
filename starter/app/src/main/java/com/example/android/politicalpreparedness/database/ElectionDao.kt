@@ -1,15 +1,15 @@
 package com.example.android.politicalpreparedness.database
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.room.*
-import com.example.android.politicalpreparedness.network.models.Election
-import com.example.android.politicalpreparedness.utils.SingleLiveEvent
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 @Dao
 interface ElectionDao {
 
-    //TODO: Add insert query
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertElections(vararg election: ElectionEntity)
 
@@ -19,7 +19,7 @@ interface ElectionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFollowElection(vararg followedElection: FollowedElectionEntity)
 
-    //TODO: Add select all election query
+
     @Query("SELECT * FROM election_table ORDER BY name")
     fun getElection(): LiveData<List<ElectionEntity>>
 
@@ -32,7 +32,7 @@ interface ElectionDao {
     @Query("SELECT * FROM followed_election_table ORDER BY name")
     fun getFollowedElections(): LiveData<List<FollowedElectionEntity>>
 
-    //TODO: Add select single election query
+
     @Query("SELECT * FROM  election_table WHERE id =:id")
     suspend fun getElectionById(id: Int): ElectionEntity?
 
@@ -40,7 +40,7 @@ interface ElectionDao {
     fun getVoterInformation(): VoterInfoEntity?
 
 
-    //TODO: Add delete query
+
     @Query("DELETE FROM election_table WHERE id =:id")
     suspend fun deleteElection(id: Int)
 
@@ -51,11 +51,8 @@ interface ElectionDao {
     suspend fun deletedFollowed(id: Int)
 
     @Query("DELETE FROM election_table")
-    suspend fun deleteAllElection()
+    suspend fun clear()
 
-
-
-    //TODO: Add clear query
 
 
 
